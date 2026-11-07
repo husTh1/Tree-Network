@@ -82,13 +82,36 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 #panel h3:focus{outline:none}
 @media(hover:hover){.leaf:hover,.bar button:hover{filter:brightness(.97)}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.g{stroke-dashoffset:0}}
+
+#tw{position:relative}
+#ly{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+#leo{position:absolute;bottom:1%;left:0;width:clamp(46px,14.5%,68px);background:none;border:0;padding:0;cursor:pointer;pointer-events:auto;-webkit-tap-highlight-color:transparent;will-change:transform}
+#leo svg{display:block;width:100%;height:auto;overflow:visible}
+#leo:focus-visible{outline:3px solid var(--acc);outline-offset:2px;border-radius:12px}
+#leo.walk svg{animation:lb .45s ease-in-out infinite}
+#leo.wave .arm{animation:wv .45s ease-in-out 3}
+.arm{transform-box:fill-box;transform-origin:0 100%}
+@keyframes lb{0%,100%{transform:translateY(0)}50%{transform:translateY(-2.5px)}}
+@keyframes wv{0%,100%{transform:rotate(0)}50%{transform:rotate(-28deg)}}
+@keyframes gf{0%{opacity:0;transform:translateY(0) scale(.5)}20%{opacity:1}100%{opacity:0;transform:translateY(-70px) scale(1.3)}}
+#lbub{position:absolute;bottom:22%;max-width:210px;background:var(--tip);color:var(--fg);border:2px solid var(--leaf);border-radius:14px;padding:9px 12px;font:600 14px/1.6 system-ui,sans-serif;text-align:center;box-shadow:0 4px 14px #0003;pointer-events:none;opacity:0;transition:opacity .2s}
+#lbub.on{opacity:1}
+.gift{position:absolute;font-size:22px;animation:gf 1.4s ease-out forwards;pointer-events:none}
+#leoT{position:absolute;bottom:0;inset-inline-start:0;pointer-events:auto;font:600 12px system-ui,sans-serif;min-height:40px;background:var(--card);color:var(--muted);border:1px solid var(--bd);border-radius:999px;padding:4px 10px;cursor:pointer}
+#leo.act svg{transform-origin:50% 100%;animation:sw 1.2s ease-in-out infinite}
+#leo.act .gl{animation:pl .6s ease-in-out infinite alternate}
+.gift.fall{animation:fl 1.1s ease-in forwards}
+@keyframes sw{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+@keyframes pl{from{opacity:.25}to{opacity:.95}}
+@keyframes fl{0%{opacity:0;transform:translateY(-34px)}30%{opacity:1}100%{opacity:0;transform:translateY(6px)}}
+@media(prefers-reduced-motion:reduce){#leo.act svg,#leo.act .gl{animation:none}#leo.walk svg,#leo.wave .arm,.gift{animation:none}.gift{opacity:1}}
 </style>
 </head>
 <body>
 <main>
 <div class="top"><button id="th"></button><button id="rs">إعادة ضبط التقدم</button></div><header><h1>🌳 شجرة الشبكات</h1><p>Computer Networks — اضغط على ثمرة لتظهر عناوينه، ثم على ورقة لتظهر التفاصيل. اضغط على الفرع مرة ثانية لإغلاقه.</p></header>
 <div class="sr"><input id="q" type="search" placeholder="ابحث في العناوين والشرح… Search" aria-label="بحث"><div id="res"></div></div>
-<svg id="tree" viewBox="0 0 400 330" role="group" aria-label="شجرة المحاضرات"></svg>
+<div id="tw"><svg id="tree" viewBox="0 0 400 330" role="group" aria-label="شجرة المحاضرات"></svg><div id="ly"><button id="leo" type="button" aria-label="ليو: اضغط ليعطيك هدية"><svg viewBox="0 -6 64 96" aria-hidden="true"><ellipse cx="32" cy="86" rx="19" ry="3" fill="#0003"/><rect x="19" y="76" width="12" height="9" rx="4" fill="#5a3a22"/><rect x="34" y="76" width="12" height="9" rx="4" fill="#5a3a22"/><path d="M10 82L9 34" stroke="#6b4423" stroke-width="3" stroke-linecap="round"/><circle class="gl" cx="9" cy="31" r="8" fill="#8aff5a" opacity=".3"/><path d="M9 25l-4 5 4 7 4-7z" fill="#8aff5a" stroke="#3c9a2a" stroke-width="1"/><path d="M16 79L21 50Q32 44 43 50L48 79Q32 84 16 79Z" fill="#2f5d3a" stroke="#8a5a2b" stroke-width="1.5"/><rect x="21" y="61" width="22" height="3.5" fill="#c9993d"/><rect x="37" y="63" width="7" height="8" rx="1.5" fill="#7a4a2a"/><circle cx="26" cy="73" r="1.6" fill="#8a5a2b"/><path d="M22 52Q14 56 12 62" stroke="#2f5d3a" stroke-width="5" stroke-linecap="round" fill="none"/><circle cx="11.5" cy="62" r="3.2" fill="#f6cfa8"/><g class="arm"><path d="M42 52Q51 51 55 44" stroke="#2f5d3a" stroke-width="5" stroke-linecap="round" fill="none"/><circle cx="56" cy="42.5" r="3.4" fill="#f6cfa8"/></g><circle cx="32" cy="35" r="15" fill="#f6cfa8"/><g fill="#7a4326"><circle cx="19" cy="30" r="6"/><circle cx="25" cy="23" r="6"/><circle cx="33" cy="21" r="6"/><circle cx="41" cy="23" r="6"/><circle cx="46" cy="30" r="5.5"/></g><path d="M19 32Q27 24 33 31Q38 24 45 32L45 27Q32 16 19 27Z" fill="#7a4326"/><ellipse cx="26" cy="37" rx="3.3" ry="3.9" fill="#2a160c"/><ellipse cx="38" cy="37" rx="3.3" ry="3.9" fill="#2a160c"/><circle cx="27.1" cy="35.6" r="1.1" fill="#fff"/><circle cx="39.1" cy="35.6" r="1.1" fill="#fff"/><path d="M22 32l6-1.5M36 30.5l6 1.5" stroke="#3b2413" stroke-width="1.4" stroke-linecap="round"/><circle cx="21" cy="42" r="3" fill="#f08080" opacity=".4"/><circle cx="43" cy="42" r="3" fill="#f08080" opacity=".4"/><g fill="#c77a5a"><circle cx="23" cy="43" r=".6"/><circle cx="25" cy="44.2" r=".6"/><circle cx="41" cy="44.2" r=".6"/><circle cx="39" cy="43" r=".6"/></g><path d="M28 43.5Q32 50 36 43.5Z" fill="#8a2b2b"/><ellipse cx="32" cy="22" rx="26" ry="7" fill="#5b3a21" stroke="#3b2413" stroke-width="1.2"/><path d="M16 22Q24 2 37 -3Q47 -6 51 3Q44 2 45 11L48 22Z" fill="#6b4528" stroke="#3b2413" stroke-width="1"/><path d="M26 15l10-6 4 8-12 4z" fill="#4c7a43"/><path d="M26 15l10-6 4 8-12 4z" fill="none" stroke="#c9993d" stroke-width=".7" stroke-dasharray="1.5 1.5"/><ellipse cx="51" cy="10" rx="2" ry="3.6" fill="#d4a437" transform="rotate(20 51 10)"/></svg></button><div id="lbub" role="status" aria-live="polite"></div></div><button id="leoT" type="button"></button></div>
 <div id="leaves"></div>
 <div class="bar"><button data-m="both" class="on">English + عربي</button><button data-m="m-en">English</button><button data-m="m-ar">عربي</button></div>
 <section id="panel"></section>
@@ -370,6 +393,40 @@ th.onclick=()=>{const v=dk()?"light":"dark";root.dataset.theme=v;try{localStorag
 let rt=0;$("#rs").onclick=function(){if(!rt){this.textContent="اضغط مرة ثانية للتأكيد";rt=setTimeout(()=>{rt=0;this.textContent="إعادة ضبط التقدم"},3000);return}clearTimeout(rt);rt=0;this.textContent="إعادة ضبط التقدم";R={};save();upd();document.querySelectorAll(".leaf").forEach(l=>l.classList.remove("ok"));const b=$("#rv");if(b){b.classList.remove("on");b.textContent="علّم كمُراجَع"}};
 $("#q").oninput=function(){const v=nz(this.value),o=$("#res");if(!v){o.innerHTML="";return}const h=[];D.forEach(b=>b.T.forEach((t,i)=>{const s=nz([...t.t,...(t.d||[]),...t.p.flat(),...(t.x||[]),...t.s].join(" "));if(s.includes(v))h.push([b.n,i,t.t])}));o.innerHTML=h.length?h.map((r,j)=>`<button data-j="${j}"><span dir="ltr">${esc(r[2][0])}</span> <small>· ${esc(r[2][1])} — المحاضرة ${r[0]}</small></button>`).join(""):"<small>لا توجد نتائج</small>";o.querySelectorAll("button").forEach((x,j)=>x.onclick=()=>{pick(h[j][0],true);show(h[j][0],h[j][1]);o.innerHTML="";$("#q").value=""})};
 document.onkeydown=e=>{if(e.altKey||e.ctrlKey||e.metaKey)return;const r=$("#res");if(e.target.id==="q"){if(e.key==="Escape"){r.innerHTML="";e.target.value=""}return}if(e.key==="/"){e.preventDefault();$("#q").focus();return}if(e.key==="Escape"&&r.innerHTML){r.innerHTML="";return}if(curT===null)return;const b=$(e.key==="ArrowRight"?"#pv":e.key==="ArrowLeft"?"#nx":e.key==="Escape"?"#cl":"#none");if(b&&!b.disabled)b.click()};
+</script>
+<script>
+(()=>{
+const M=["كل ورقة تراجعها تقرّبك خطوة من النجاح 🌿","الدرس الصعب اليوم يصير سهلاً بكرة، كمّل.","ركّز على الفهم، والحفظ يجي وراه.","خذ استراحة 5 دقائق وارجع أقوى ☕","أنت أقرب للنجاح مما تتصوّر.","اشرب ماء 💧 وكمّل، شغلك حلو.","التكرار أمّ التعلّم، راجع مرة ثانية.","لا تقارن نفسك بغيرك، قارن نفسك بأمس.","ثمرة بعد ثمرة، والشجرة كلها تصير إلك 🍎","الثقة تجي من التحضير، وأنت دا تتحضّر.","شفتك تذاكر، ولله فخور بيك!","ابتسم 😊 أنت تسوّي شي رائع.","نظّم وقتك وخلّي النوم كافي، الدماغ يحتاجه.","غلطة اليوم هي معلومة ما تنسى بعدها.","خطوة صغيرة كل يوم تسوي فرق كبير ✨","أنت تقدر، وأنا مصدّق بيك 💪","ذاكر بذكاء: 25 دقيقة تركيز ثم 5 دقائق راحة ⏱️","اشرح اللي فهمته بصوت عالي، تثبت المعلومة أكثر 🗣️","اللي يتعب اليوم يرتاح يوم الامتحان 😎","ابدأ بأصعب ورقة وأنت نشيط، والباقي يسهل.","ولا يهمك لو نسيت شي، راجعه مرة ثانية وبيثبت.","كل ثمرة تخلّصها هي إنجاز يستاهل الفرحة 🍎","رتّب نومك قبل الامتحان، الدماغ المرتاح يتذكر أحسن 😴","اربط كل معلومة بمثال، وبيصير تذكرها أسهل.","لا تخاف من الأخطاء، هي أحسن معلّم.","أنت مو لوحدك، كلنا نذاكر وياك 🤝","شوية شوية توصل، المهم ما توقف.","كوب شاي وورقة وتركيز، وصفة النجاح ☕","اكتب ملخص بخط إيدك، فيه سحر للحفظ ✍️","ثقتك بنفسك نص النجاح، والنص الثاني مذاكرتك 💚","إذا تعبت، افتح الشباك وتنفّس عميقاً 🌬️","التقدم الصغير هو تقدم، افرح بيه 🎈","لا تأجّل ورقة اليوم لبكرة، بكرة إلها ورقتها 😉","الله يوفقك ويفتح عليك، أنت تقدر 🤲"];
+const C=["أحسنت! خلّصت محاضرة كاملة 🎉","ثمرة مكتملة! كمّل على نفس الروح 🍎"],ALL="خلّصت كل المحاضرات! أنت بطل حقيقي 🏆";
+const G=["🎁","⭐","🍎","🍃","✨","🌟"];
+const $=id=>document.getElementById(id),L=$("leo"),B=$("lbub"),Y=$("ly"),T=$("leoT");
+const rm=matchMedia("(prefers-reduced-motion:reduce)").matches;
+let on=true,x=0,d=1,pause=0,bag=[],tm=0,last=0,li=-1,passed=false,ai=0,iv=0,at=0;
+try{on=localStorage.getItem("netleo")!=="off"}catch(e){}
+const W=()=>Y.clientWidth,LW=()=>L.offsetWidth;
+function place(){L.style.transform="translateX("+x+"px) scaleX("+d+")";}
+function say(t){B.textContent=t;B.classList.add("on");const w=W(),bw=Math.min(210,w-16);B.style.maxWidth=bw+"px";const cx=x+LW()/2;B.style.left=Math.max(8,Math.min(w-bw-8,cx-bw/2))+"px";clearTimeout(tm);tm=setTimeout(()=>{B.classList.remove("on");pause=0;},4200);}
+function gift(t){endAct();const g=document.createElement("span");g.className="gift";g.textContent=G[Math.floor(Math.random()*G.length)];g.style.left=(x+LW()/2-11)+"px";g.style.bottom="22%";Y.appendChild(g);setTimeout(()=>g.remove(),1500);say(t);L.classList.add("wave");setTimeout(()=>L.classList.remove("wave"),1400);pause=1;}
+function next(){if(!bag.length){bag=M.map((_,i)=>i).sort(()=>Math.random()-.5);if(bag.length>1&&bag[bag.length-1]===li){const k=Math.floor(Math.random()*(bag.length-1));[bag[k],bag[bag.length-1]]=[bag[bag.length-1],bag[k]];}}li=bag.pop();return M[li];}
+const A=[{c:"أنمّي الشجرة بسحري ✨",e:["🍃","✨"],f:0},{c:"أسقي الشجرة 💧",e:["💧"],f:1},{c:"أراجع المحاضرة 📖",e:["📖"],f:0,o:1},{c:"أي ثمرة أقطف؟ 🍎",e:["🍎"],f:0,o:1}];
+function endAct(){clearInterval(iv);clearTimeout(at);L.classList.remove("act");}
+function puff(e,l,b,f){const g=document.createElement("span");g.className="gift"+(f?" fall":"");g.textContent=e;g.style.left=l+"px";g.style.bottom=b+"%";Y.appendChild(g);setTimeout(()=>g.remove(),1500);}
+function act(){endAct();const a=A[ai++%A.length];pause=1;L.classList.remove("walk");L.classList.add("act");say(a.c);clearTimeout(tm);let n=0;const mid=W()/2;
+const sp=()=>{const j=(Math.random()-.5)*28;if(a.o)puff(a.e[0],x+LW()/2-9,38+Math.random()*6,0);else puff(a.e[n++%a.e.length],mid-9+j,24+Math.random()*10,a.f)};
+sp();iv=setInterval(sp,a.o?1100:420);at=setTimeout(()=>{endAct();B.classList.remove("on");pause=0},3600);}
+function loop(t){if(on&&!rm&&!document.hidden){const dt=Math.min(.05,(t-last)/1000||0);last=t;if(!pause){x+=d*22*dt;const m=W()-LW();if(x>=m){x=m;d=-1;passed=false}if(x<=0){x=0;d=1;passed=false}const tg=m/2-d*LW()*.75;if(!passed&&((d>0&&x>=tg)||(d<0&&x<=tg))){passed=true;x=tg;act()}L.classList.add("walk")}else L.classList.remove("walk");place();}else last=t;requestAnimationFrame(loop);}
+function apply(){Y.style.display=on?"":"none";T.textContent=on?"🙈 إخفاء ليو":"👋 إظهار ليو";T.setAttribute("aria-pressed",!on);}
+L.addEventListener("pointerdown",()=>{pause=1;setTimeout(()=>{if(!B.classList.contains("on"))pause=0},1500)});
+L.addEventListener("click",()=>gift(next()));
+T.addEventListener("click",()=>{on=!on;try{localStorage.setItem("netleo",on?"on":"off")}catch(e){}apply();});
+function done(){let r={};try{r=JSON.parse(localStorage.getItem("netrev")||"{}")}catch(e){}return D.map(l=>l.T.filter((_,i)=>r[l.n+"-"+i]).length);}
+let prev=done();
+document.addEventListener("click",e=>{if(e.target.closest&&e.target.closest("#rv")){setTimeout(()=>{const c=done();let ev=null;if(D.every((l,i)=>l.T.length&&c[i]===l.T.length)&&!D.every((l,i)=>l.T.length&&prev[i]===l.T.length))ev=ALL;else D.forEach((l,i)=>{if(l.T.length&&c[i]===l.T.length&&prev[i]<l.T.length)ev=C[Math.floor(Math.random()*C.length)]});prev=c;if(ev&&on)gift(ev)},120)}});
+x=W()*(.1+Math.random()*.5);passed=x>=(W()-LW())/2-LW()*.75;apply();place();
+if(rm){x=Math.max(0,W()-LW()-10);place();}
+requestAnimationFrame(loop);
+addEventListener("resize",()=>{x=Math.min(x,Math.max(0,W()-LW()));place();});
+})();
 </script>
 </body>
 </html>
