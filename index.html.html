@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>شجرة الشبكات | Computer Networks Tree</title>
+<meta name="color-scheme" content="light dark"><meta name="theme-color" content="#f6f4ee"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='13' font-size='13'%3E🌳%3C/text%3E%3C/svg%3E"><script>try{var v=localStorage.getItem("nettheme");if(v==="dark"||v==="light")document.documentElement.dataset.theme=v}catch(e){}</script>
+<style>
+:root{--bg:#f6f4ee;--fg:#1f2a24;--muted:#58645d;--card:#ffffff;--bd:#dcd8cb;--trunk:#7a5a3a;--fruit:#c73a2a;--fruit2:#9f2418;--arc:#9a3412;--leaf:#247a4c;--leaf2:#e4f3ea;--acc:#c2410c;--tip:#ffffff;--onl:#ffffff;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--onl:#06210f;color-scheme:dark;--bg:#101612;--fg:#e8efe9;--muted:#9fb0a5;--card:#18211b;--bd:#2c3a30;--trunk:#a67c52;--fruit:#d9503f;--fruit2:#b83a2c;--arc:#f0d9a8;--leaf:#4cc38a;--leaf2:#1b3326;--acc:#fb923c;--tip:#18211b}}
+:root[data-theme="dark"]{--onl:#06210f;color-scheme:dark;--bg:#101612;--fg:#e8efe9;--muted:#9fb0a5;--card:#18211b;--bd:#2c3a30;--trunk:#a67c52;--fruit:#d9503f;--fruit2:#b83a2c;--arc:#f0d9a8;--leaf:#4cc38a;--leaf2:#1b3326;--acc:#fb923c;--tip:#18211b}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,"Segoe UI",Tahoma,"Noto Sans Arabic",sans-serif;line-height:1.7}
+main{max-width:860px;margin:auto;padding:16px}
+header{text-align:center;padding:8px 0}
+h1{margin:0;font-size:28px}
+header p{margin:2px 0;color:var(--muted)}
+#tree{width:100%;max-width:520px;display:block;margin:0 auto}
+.g{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.1s ease-out forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.tip{cursor:pointer;outline:none}
+.tip .h{fill:transparent;stroke:none}
+.tip .fr{fill:var(--fruit);stroke:var(--fruit2);stroke-width:2.5;transition:fill .2s}
+.tip.on .fr{fill:var(--fruit2);stroke:var(--acc);stroke-width:4}
+.tip .st{stroke:var(--trunk);stroke-width:3;stroke-linecap:round;fill:none}
+.tip .shn{fill:#fff;opacity:.35;pointer-events:none}
+.tip:focus-visible .fr{stroke:var(--acc);stroke-width:4}
+.nm{font:700 20px system-ui,sans-serif;fill:#fff;pointer-events:none}
+.fol{pointer-events:none;animation:fin .9s ease-out 1s both}
+.cn{fill:var(--leaf);opacity:.13}
+.lf{fill:var(--leaf)}.lf.b{opacity:.6}
+@keyframes fin{from{opacity:0}to{opacity:1}}
+@keyframes sway{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
+@media(prefers-reduced-motion:no-preference){.lf{transform-box:fill-box;transform-origin:0 50%;animation:sway 3.5s ease-in-out infinite alternate;animation-delay:var(--d,0s)}}
+.pg{font:600 14px system-ui,sans-serif;fill:var(--fg);pointer-events:none;paint-order:stroke;stroke:var(--bg);stroke-width:5px;stroke-linejoin:round}
+h2{font-size:20px;margin:18px 0 10px}
+h2 small{display:block;color:var(--muted);font-weight:400;font-size:14px}
+.lv{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.leaf{background:var(--card);border:2px solid var(--leaf);color:var(--fg);border-radius:4px 22px 4px 22px;padding:10px 14px;font:inherit;text-align:start;cursor:pointer;animation:grow .5s both;animation-delay:calc(var(--i)*80ms)}
+.leaf span{display:block;font-weight:700;text-align:left}
+.leaf small{display:block;color:var(--arc)}
+.leaf.ok{background:var(--leaf2)}
+.leaf.ok::after{content:"✓ تمت المراجعة";color:var(--leaf);font-size:13px}
+@keyframes grow{from{transform:scale(.3) translateY(14px);opacity:0}to{transform:none;opacity:1}}
+.soon{color:var(--muted)}
+.bar{display:flex;gap:8px;justify-content:center;margin:14px 0 4px;flex-wrap:wrap;position:sticky;top:0;z-index:5;background:var(--bg);padding:6px 0}
+.bar button,#rv{font:inherit;background:var(--card);color:var(--fg);border:1px solid var(--bd);border-radius:20px;padding:4px 16px;cursor:pointer}
+.bar button.on,#rv.on{background:var(--leaf);color:var(--onl);border-color:var(--leaf)}
+#panel h3{font-size:21px;margin:16px 0 4px}
+#panel h4{margin:16px 0 4px;color:var(--leaf)}
+.box{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:6px 14px;margin:6px 0}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:8px 0}
+.row+.row{border-top:1px dashed var(--bd)}
+.row p{margin:0}
+.en{text-align:left;font-size:15px}
+.ar{font-size:16.5px;color:var(--arc)}
+.tipbox{border-inline-start:4px solid var(--acc)}
+#panel.m-en .ar,#panel.m-ar .en{display:none}
+#panel.m-en .row,#panel.m-ar .row{grid-template-columns:1fr}
+@media(max-width:640px){.row{grid-template-columns:1fr;gap:4px}}
+#rv{margin:16px 0 8px}
+.top{display:flex;justify-content:flex-end;gap:8px}
+.top button,.nav button{font:inherit;background:var(--card);color:var(--fg);border:1px solid var(--bd);border-radius:20px;padding:4px 14px;cursor:pointer}
+.sr{margin:10px 0}
+.sr input{width:100%;box-sizing:border-box;font:inherit;background:var(--card);color:var(--fg);border:1px solid var(--bd);border-radius:20px;padding:8px 16px}
+#res{display:grid;gap:6px;margin-top:6px}
+#res button{font:inherit;text-align:start;background:var(--card);color:var(--fg);border:1px solid var(--bd);border-radius:10px;padding:6px 12px;cursor:pointer}
+#res small{color:var(--muted)}
+.leaf.cur{background:var(--leaf);color:var(--onl)}
+.leaf.cur small,.leaf.cur::after{color:var(--onl)}
+.nav{display:flex;justify-content:space-between;gap:8px;margin:12px 0 28px}
+button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.top button,.bar button,#rv,.act button,.ph button,#res button{min-height:44px;min-width:44px}
+.tip circle.h,.tip.on circle.h{fill:transparent;stroke:none}
+.ph{position:sticky;top:56px;z-index:4;background:var(--bg);display:flex;align-items:center;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--bd)}
+.ph button,.act button{font:inherit;background:var(--card);color:var(--fg);border:1px solid var(--bd);border-radius:12px;cursor:pointer}
+.act{position:sticky;bottom:0;z-index:4;display:flex;gap:8px;background:var(--bg);border-top:1px solid var(--bd);padding:8px 0 calc(8px + env(safe-area-inset-bottom,0px));margin-top:16px}
+.act #rv{flex:1;margin:0}
+.act button:disabled{opacity:.45;cursor:default}
+#panel{scroll-margin-top:56px}
+#panel h3:focus{outline:none}
+@media(hover:hover){.leaf:hover,.bar button:hover{filter:brightness(.97)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.g{stroke-dashoffset:0}}
+
+#tw{position:relative}
+#ly{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+#leo{position:absolute;bottom:1%;left:0;width:clamp(46px,14.5%,68px);background:none;border:0;padding:0;cursor:pointer;pointer-events:auto;-webkit-tap-highlight-color:transparent;will-change:transform}
+#leo svg{display:block;width:100%;height:auto;overflow:visible}
+#leo:focus-visible{outline:3px solid var(--acc);outline-offset:2px;border-radius:12px}
+#leo.walk svg{animation:lb .45s ease-in-out infinite}
+#leo.wave .arm{animation:wv .45s ease-in-out 3}
+.arm{transform-box:fill-box;transform-origin:0 100%}
+@keyframes lb{0%,100%{transform:translateY(0)}50%{transform:translateY(-2.5px)}}
+@keyframes wv{0%,100%{transform:rotate(0)}50%{transform:rotate(-28deg)}}
+@keyframes gf{0%{opacity:0;transform:translateY(0) scale(.5)}20%{opacity:1}100%{opacity:0;transform:translateY(-70px) scale(1.3)}}
+#lbub{position:absolute;bottom:22%;max-width:210px;background:var(--tip);color:var(--fg);border:2px solid var(--leaf);border-radius:14px;padding:9px 12px;font:600 14px/1.6 system-ui,sans-serif;text-align:center;box-shadow:0 4px 14px #0003;pointer-events:none;opacity:0;transition:opacity .2s}
+#lbub.on{opacity:1}
+.gift{position:absolute;font-size:22px;animation:gf 1.4s ease-out forwards;pointer-events:none}
+#leoT{position:absolute;bottom:0;inset-inline-start:0;pointer-events:auto;font:600 12px system-ui,sans-serif;min-height:40px;background:var(--card);color:var(--muted);border:1px solid var(--bd);border-radius:999px;padding:4px 10px;cursor:pointer}
+#leo.act svg{transform-origin:50% 100%;animation:sw 1.2s ease-in-out infinite}
+#leo.act .gl{animation:pl .6s ease-in-out infinite alternate}
+.gift.fall{animation:fl 1.1s ease-in forwards}
+@keyframes sw{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+@keyframes pl{from{opacity:.25}to{opacity:.95}}
+@keyframes fl{0%{opacity:0;transform:translateY(-34px)}30%{opacity:1}100%{opacity:0;transform:translateY(6px)}}
+@media(prefers-reduced-motion:reduce){#leo.act svg,#leo.act .gl{animation:none}#leo.walk svg,#leo.wave .arm,.gift{animation:none}.gift{opacity:1}}
+</style>
+</head>
+<body>
+<main>
+<div class="top"><button id="th"></button><button id="rs">إعادة ضبط التقدم</button></div><header><h1>🌳 شجرة الشبكات</h1><p>Computer Networks — اضغط على ثمرة لتظهر عناوينه، ثم على ورقة لتظهر التفاصيل. اضغط على الفرع مرة ثانية لإغلاقه.</p></header>
+<div class="sr"><input id="q" type="search" placeholder="ابحث في العناوين والشرح… Search" aria-label="بحث"><div id="res"></div></div>
+<div id="tw"><svg id="tree" viewBox="0 0 400 330" role="group" aria-label="شجرة المحاضرات"></svg><div id="ly"><button id="leo" type="button" aria-label="ليو: اضغط ليعطيك هدية"><svg viewBox="0 -6 64 96" aria-hidden="true"><ellipse cx="32" cy="86" rx="19" ry="3" fill="#0003"/><rect x="19" y="76" width="12" height="9" rx="4" fill="#5a3a22"/><rect x="34" y="76" width="12" height="9" rx="4" fill="#5a3a22"/><path d="M10 82L9 34" stroke="#6b4423" stroke-width="3" stroke-linecap="round"/><circle class="gl" cx="9" cy="31" r="8" fill="#8aff5a" opacity=".3"/><path d="M9 25l-4 5 4 7 4-7z" fill="#8aff5a" stroke="#3c9a2a" stroke-width="1"/><path d="M16 79L21 50Q32 44 43 50L48 79Q32 84 16 79Z" fill="#2f5d3a" stroke="#8a5a2b" stroke-width="1.5"/><rect x="21" y="61" width="22" height="3.5" fill="#c9993d"/><rect x="37" y="63" width="7" height="8" rx="1.5" fill="#7a4a2a"/><circle cx="26" cy="73" r="1.6" fill="#8a5a2b"/><path d="M22 52Q14 56 12 62" stroke="#2f5d3a" stroke-width="5" stroke-linecap="round" fill="none"/><circle cx="11.5" cy="62" r="3.2" fill="#f6cfa8"/><g class="arm"><path d="M42 52Q51 51 55 44" stroke="#2f5d3a" stroke-width="5" stroke-linecap="round" fill="none"/><circle cx="56" cy="42.5" r="3.4" fill="#f6cfa8"/></g><circle cx="32" cy="35" r="15" fill="#f6cfa8"/><g fill="#7a4326"><circle cx="19" cy="30" r="6"/><circle cx="25" cy="23" r="6"/><circle cx="33" cy="21" r="6"/><circle cx="41" cy="23" r="6"/><circle cx="46" cy="30" r="5.5"/></g><path d="M19 32Q27 24 33 31Q38 24 45 32L45 27Q32 16 19 27Z" fill="#7a4326"/><ellipse cx="26" cy="37" rx="3.3" ry="3.9" fill="#2a160c"/><ellipse cx="38" cy="37" rx="3.3" ry="3.9" fill="#2a160c"/><circle cx="27.1" cy="35.6" r="1.1" fill="#fff"/><circle cx="39.1" cy="35.6" r="1.1" fill="#fff"/><path d="M22 32l6-1.5M36 30.5l6 1.5" stroke="#3b2413" stroke-width="1.4" stroke-linecap="round"/><circle cx="21" cy="42" r="3" fill="#f08080" opacity=".4"/><circle cx="43" cy="42" r="3" fill="#f08080" opacity=".4"/><g fill="#c77a5a"><circle cx="23" cy="43" r=".6"/><circle cx="25" cy="44.2" r=".6"/><circle cx="41" cy="44.2" r=".6"/><circle cx="39" cy="43" r=".6"/></g><path d="M28 43.5Q32 50 36 43.5Z" fill="#8a2b2b"/><ellipse cx="32" cy="22" rx="26" ry="7" fill="#5b3a21" stroke="#3b2413" stroke-width="1.2"/><path d="M16 22Q24 2 37 -3Q47 -6 51 3Q44 2 45 11L48 22Z" fill="#6b4528" stroke="#3b2413" stroke-width="1"/><path d="M26 15l10-6 4 8-12 4z" fill="#4c7a43"/><path d="M26 15l10-6 4 8-12 4z" fill="none" stroke="#c9993d" stroke-width=".7" stroke-dasharray="1.5 1.5"/><ellipse cx="51" cy="10" rx="2" ry="3.6" fill="#d4a437" transform="rotate(20 51 10)"/></svg></button><div id="lbub" role="status" aria-live="polite"></div></div><button id="leoT" type="button"></button></div>
+<div id="leaves"></div>
+<div class="bar"><button data-m="both" class="on">English + عربي</button><button data-m="m-en">English</button><button data-m="m-ar">عربي</button></div>
+<section id="panel"></section>
+</main>
+<script>
+const D=[
+{n:1,en:"Introduction to Networking",ar:"مقدمة في الشبكات",T:[
+{t:["Introduction to Networking","مقدمة في الشبكات"],
+d:["A network is a set of devices (nodes) connected by communication links; each node can send and/or receive data generated by other nodes on the network.","الشبكة هي مجموعة من الأجهزة (تسمى عُقَد) مرتبطة بوسائل اتصال، وكل عقدة تستطيع إرسال و/أو استقبال البيانات التي تنتجها العقد الأخرى في الشبكة."],
+p:[["Node: any device on the network (computer, phone, printer…).","العقدة: أي جهاز على الشبكة (حاسوب، هاتف، طابعة…)."],["Link: the connection between nodes.","الرابط: وسيلة الاتصال بين العقد."]],
+s:["Network = devices + links + data exchange.","الشبكة = أجهزة + روابط + تبادل بيانات."]},
+{t:["Data Communication","الاتصال البياني"],
+d:["The exchange of data (in the form of 0’s and 1’s) between two devices via some form of transmission medium (such as a wire cable).","تبادل البيانات (على شكل أصفار وواحدات) بين جهازين عبر وسط نقل (مثل الكيبل السلكي)."],
+p:[["Communication means sharing information; it can be local (face to face) or remote (over a distance).","الاتصال يعني مشاركة المعلومات، وقد يكون محلياً (وجهاً لوجه) أو عن بُعد."],["Telecommunication (telephony and television) means communication at a distance.","الاتصالات البعيدة (الهاتف والتلفاز) تعني التواصل عن بُعد."]],
+s:["Data communication is bits moving between devices over a medium.","الاتصال البياني هو انتقال البتات بين الأجهزة عبر وسط نقل."]},
+{t:["Fundamental Characteristics","الخصائص الأساسية"],
+p:[["Delivery: the system must deliver data to the correct destination, received by the intended device or user.","التسليم: يجب أن توصل المنظومة البيانات إلى الوجهة الصحيحة ويستلمها الجهاز أو المستخدم المقصود."],["Accuracy: data must arrive unaltered; data altered in transmission and left uncorrected are unusable.","الدقة: يجب أن تصل البيانات دون تغيير؛ البيانات التي تتغير أثناء النقل ولم تُصحَّح تصبح غير صالحة للاستخدام."],["Timeliness: data must arrive on time; late data are useless. For audio and video it means delivery as produced, in the same order, without significant delay (real-time transmission).","التوقيت: يجب أن تصل البيانات في وقتها المناسب، فالمتأخرة عديمة الفائدة. في الصوت والفيديو يعني ذلك إيصالها فور إنتاجها وبنفس ترتيبها ودون تأخير كبير، ويسمى النقل بالزمن الحقيقي (real-time)."]],
+s:["Right place (Delivery), right content (Accuracy), right time (Timeliness).","المكان الصحيح (التسليم)، المحتوى الصحيح (الدقة)، الوقت الصحيح (التوقيت)."]},
+{t:["Components","المكونات الخمسة"],
+p:[["Message: the information (data) to be communicated: text, numbers, pictures, sound, video, or any combination.","الرسالة: المعلومات (البيانات) المراد إيصالها: نص أو أرقام أو صور أو صوت أو فيديو أو مزيج منها."],["Sender: the device that sends the message (computer, workstation, telephone handset, video camera…).","المرسل: الجهاز الذي يرسل الرسالة (حاسوب، محطة عمل، هاتف، كاميرا فيديو…)."],["Receiver: the device that receives the message (computer, workstation, telephone handset, television…).","المستقبل: الجهاز الذي يستقبل الرسالة (حاسوب، محطة عمل، هاتف، تلفاز…)."],["Medium: the physical path a message travels from sender to receiver (twisted pair wire, coaxial cable, fiber-optic cable, laser, or radio waves).","الوسط: المسار الفيزيائي الذي تسلكه الرسالة من المرسل إلى المستقبل (سلك مجدول، كيبل محوري، ألياف ضوئية، ليزر، أو موجات راديوية)."],["Protocol: a set of rules that govern data communication; an agreement between the communicating devices.","البروتوكول: مجموعة قواعد تنظم الاتصال، وهو اتفاق بين الأجهزة المتصلة."]],
+x:["Analogy: without a protocol, two devices may be connected but not communicating, like a person who speaks only Japanese facing a person who speaks French.","تشبيه: بدون بروتوكول قد يكون الجهازان متصلين لكن لا يتفاهمان، كشخص يتكلم اليابانية فقط أمام شخص يتكلم الفرنسية."],
+s:["Communication = a message from a sender to a receiver, over a medium, following a protocol.","الاتصال = رسالة من مرسل إلى مستقبل عبر وسط وفق بروتوكول."]},
+{t:["Data Representation","تمثيل البيانات"],
+d:["Data is a collection of raw facts which is processed to deduce information.","البيانات هي مجموعة حقائق خام تُعالَج لاستنتاج المعلومات."],
+p:[["Text: upper- and lower-case letters stored as patterns of bits. Encoding systems: ASCII, Unicode.","النص: حروف كبيرة وصغيرة تُخزَّن كأنماط من البتات. أنظمة الترميز: ASCII وUnicode."],["Numbers: digits 0 to 9 stored as patterns of bits. Encoding systems: ASCII, Unicode.","الأرقام: الأرقام من 0 إلى 9 تُخزَّن كأنماط من البتات. أنظمة الترميز: ASCII وUnicode."],["Images: stored digitally as a matrix of pixels (the smallest element of an image). Size depends on the number of pixels (resolution) and the bits per pixel. Formats: jpg, png, bmp.","الصور: تُخزَّن رقمياً كمصفوفة من البكسلات (أصغر عنصر في الصورة). يعتمد الحجم على عدد البكسلات (الدقة) وعدد البتات لكل بكسل. الصيغ: jpg وpng وbmp."],["Image example: black and white, 1 bit per pixel: 10 × 10 = 100 bits. With gray, 2 bits per pixel (00 black, 01 dark gray, 10 light gray, 11 white): 10 × 10 × 2 = 200 bits.","مثال: صورة بلونين، بت واحد لكل بكسل: 10 × 10 = 100 بت. مع الرمادي، بتان لكل بكسل (00 أسود، 01 رمادي غامق، 10 رمادي فاتح، 11 أبيض): 10 × 10 × 2 = 200 بت."],["Audio: sound that can be recorded and broadcast (e.g. radio); audio data is continuous, not discrete.","الصوت: بيانات صوتية يمكن تسجيلها وبثها (مثل الراديو)؛ وهي مستمرة وليست متقطعة."],["Video: broadcasting of data as pictures or movies.","الفيديو: بث البيانات على شكل صور أو أفلام."]],
+x:["Exam tip: image size = width × height × bits per pixel.","نصيحة للامتحان: حجم الصورة = العرض × الارتفاع × عدد البتات لكل بكسل."],
+s:["Every form of data is finally converted to bits (0/1) so it can travel through the network.","كل أشكال البيانات تتحول في النهاية إلى بتات (0/1) لتنتقل عبر الشبكة."]},
+{t:["Data Flow","اتجاه تدفق البيانات"],
+p:[["Simplex: communication is unidirectional; only one device sends and the other only receives. Example: the CPU sends data while the monitor only receives.","سيمبلكس: الاتصال باتجاه واحد؛ جهاز واحد يرسل والآخر يستقبل فقط. مثال: المعالج يرسل والشاشة تستقبل فقط."],["Half duplex: both stations can transmit and receive, but not at the same time; when one sends, the other can only receive, and vice versa. Example: walkie-talkie.","نصف دوبلكس: يستطيع الطرفان الإرسال والاستقبال لكن ليس بنفس الوقت؛ عندما يرسل أحدهما يستقبل الآخر فقط والعكس. مثال: الووكي توكي."],["Full duplex: both stations can transmit and receive at the same time. Example: the mobile phone.","دوبلكس كامل: يستطيع الطرفان الإرسال والاستقبال بنفس الوقت. مثال: الهاتف المحمول."]],
+s:["The difference is direction and timing: one way, two ways in turn, two ways together.","الفرق في الاتجاه والتزامن: اتجاه واحد، اتجاهان بالتناوب، اتجاهان معاً."]}
+]},
+{n:2,en:'Network Criteria, Protocols & Basic Concepts',ar:'معايير الشبكة والبروتوكولات والمفاهيم الأساسية',T:[
+{t:['Network Criteria & Applications','معايير الشبكة وتطبيقاتها'],d:['To be considered effective and efficient, a network must meet a number of criteria. The most important of these are performance, reliability, and security.','لكي تُعدّ الشبكة فعّالة وكفؤة، يجب أن تحقق عددًا من المعايير، وأهمها الأداء (Performance) والموثوقية (Reliability) والأمن (Security).'],p:[['Performance is measured by transit time and response time.','يُقاس الأداء بزمن العبور (transit time) وزمن الاستجابة (response time).'],['Reliability is measured by accuracy of delivery, frequency of failure, recovery time, and the network’s robustness.','تُقاس الموثوقية بدقة التسليم، وتكرار الأعطال، وزمن التعافي، ومتانة الشبكة.'],['Security means protecting data from unauthorized access and viruses.','يعني الأمن حماية البيانات من الوصول غير المصرّح به ومن الفيروسات.'],['Applications of networks in different fields: marketing and sales, financial services, manufacturing, electronic messaging, information services, cellular telephone, and cable television.','من تطبيقات الشبكات في مجالات مختلفة: التسويق والمبيعات، والخدمات المالية، والتصنيع، والمراسلة الإلكترونية، وخدمات المعلومات، والهاتف الخلوي، والتلفزيون الكبلي.']],s:['A network is judged by three criteria: performance, reliability, and security.','تُقيَّم الشبكة وفق ثلاثة معايير: الأداء والموثوقية والأمن.']},
+{t:['Performance','الأداء'],d:['Performance can be measured in many ways, including transit time and response time.','يمكن قياس الأداء بطرائق عدة، منها زمن العبور (transit time) وزمن الاستجابة (response time).'],p:[['Transit time: the amount of time required for a message to travel from one device to another.','زمن العبور: الزمن اللازم لانتقال الرسالة من جهاز إلى آخر.'],['Response time: the elapsed time between an inquiry and a response.','زمن الاستجابة: الزمن المنقضي بين الاستعلام والاستجابة.'],['Number of users: many concurrent users can slow response time in a network not designed to coordinate heavy traffic loads. The design of a network is based on an assessment of the average number of users communicating at any one time, and how a network responds to loading is a measure of its performance.','عدد المستخدمين: قد يؤدي وجود عدد كبير من المستخدمين المتزامنين إلى إبطاء زمن الاستجابة في شبكة غير مصممة لتنسيق أحمال حركة البيانات الكبيرة. يستند تصميم الشبكة إلى تقدير متوسط عدد المستخدمين المتصلين في وقت واحد، وتُعدّ كيفية استجابة الشبكة للحمل مقياسًا لأدائها.'],['Type of transmission medium: networks are moving to faster and faster media, such as fiber optic cabling. A medium that carries 100 megabits per second is ten times more powerful than one that carries 10 megabits per second. Transmission speeds have increased to 1 Gbps and 10 Gbps.','نوع وسط النقل: تتجه الشبكات إلى وسائط نقل أسرع فأسرع، مثل الكبلات الليفية الضوئية. الوسط الذي ينقل 100 ميجابت في الثانية أقوى بعشر مرات من الوسط الذي ينقل 10 ميجابت في الثانية. وقد ارتفعت سرعات النقل اليوم إلى 1 و10 جيجابت في الثانية.'],['Hardware: the types of hardware in a network affect both the speed and the capacity of transmission. A higher-speed computer with greater storage capacity provides better performance.','العتاد: تؤثر أنواع العتاد المستخدمة في الشبكة في سرعة النقل وسعته. فالحاسوب الأسرع ذو السعة التخزينية الأكبر يوفر أداءً أفضل.'],['Software: the software that processes data at the sender, the receiver, and the intermediate nodes also affects performance. Moving a message through a network requires processing to transform raw data into transmittable signals, to route these signals to the proper destination, and to recast them into a form the receiver can use. This software affects both the speed and the reliability of a link; well-designed software speeds up the process and makes transmission more effective and efficient.','البرمجيات: تؤثر البرمجيات التي تعالج البيانات عند المرسل والمستقبل والعقد الوسيطة في الأداء كذلك. فنقل الرسالة عبر الشبكة يتطلب معالجة لتحويل البيانات الخام إلى إشارات قابلة للنقل، وتوجيه هذه الإشارات إلى الوجهة الصحيحة، وإعادة صياغتها بشكل يستطيع المستقبل استخدامه. وتؤثر هذه البرمجيات في سرعة الوصلة وموثوقيتها؛ والبرمجيات الجيدة التصميم تسرّع العملية وتجعل النقل أكثر فاعلية وكفاءة.']],x:['Performance depends on four factors: number of users, type of transmission medium, hardware, and software.','يعتمد الأداء على أربعة عوامل: عدد المستخدمين، ونوع وسط النقل، والعتاد، والبرمجيات.'],s:['Performance is measured by two times (transit and response) and shaped by four factors.','يُقاس الأداء بزمنين (العبور والاستجابة)، وتحدده أربعة عوامل.']},
+{t:['Reliability','الموثوقية'],d:['In addition to accuracy of delivery, network reliability is measured by frequency of failure, the time it takes a link to recover from a failure, and the network’s robustness.','إضافةً إلى دقة التسليم، تُقاس موثوقية الشبكة بتكرار الأعطال، والزمن الذي تحتاجه الوصلة للتعافي من العطل، ومتانة الشبكة.'],p:[['Frequency of failure: all networks fail occasionally. A network that fails often, however, is of little value to a user.','تكرار الأعطال: تتعطل جميع الشبكات أحيانًا، غير أن الشبكة كثيرة الأعطال قليلة القيمة بالنسبة إلى المستخدم.'],['Recovery time of a network after a failure: how long it takes to restore service. A network that recovers quickly is more useful than one that does not.','زمن تعافي الشبكة بعد العطل: المدة اللازمة لاستعادة الخدمة. والشبكة التي تتعافى بسرعة أكثر فائدة من التي لا تفعل.'],['Catastrophe: networks must be protected from catastrophic events such as fire or theft. One protection against unforeseen damage is a reliable system to back up network software.','الكوارث: يجب حماية الشبكات من الأحداث الكارثية مثل الحريق أو السرقة. ومن وسائل الحماية من الأضرار غير المتوقعة وجود نظام موثوق للنسخ الاحتياطي لبرمجيات الشبكة.']],s:['A reliable network fails rarely, recovers quickly, and is protected from catastrophes.','الشبكة الموثوقة قليلة الأعطال، سريعة التعافي، ومحمية من الكوارث.']},
+{t:['Security','أمن الشبكات'],d:['Network security issues include protecting data from unauthorized access and viruses.','تشمل قضايا أمن الشبكات حماية البيانات من الوصول غير المصرّح به ومن الفيروسات.'],p:[['Unauthorized access: for a network to be useful, sensitive data must be protected from unauthorized access. Protection can be accomplished at several levels. At the lowest level are user identification codes and passwords. At a higher level are encryption techniques.','الوصول غير المصرّح به: لكي تكون الشبكة مفيدة، يجب حماية البيانات الحساسة من الوصول غير المصرّح به. ويمكن تحقيق الحماية على عدة مستويات؛ ففي أدنى مستوى توجد رموز تعريف المستخدم وكلمات المرور، وفي مستوى أعلى توجد تقنيات التشفير.'],['Viruses: because a network is accessible from many points, it can be susceptible to computer viruses. A virus is an illicitly introduced code that damages the system. A good network is protected from viruses by hardware and software designed specifically for that purpose.','الفيروسات: لأن الشبكة يمكن الوصول إليها من نقاط عديدة، فقد تكون عرضة لفيروسات الحاسوب. الفيروس شيفرة تُدخَل بصورة غير مشروعة وتُلحق الضرر بالنظام. والشبكة الجيدة محمية من الفيروسات بعتاد وبرمجيات مصممة خصيصًا لهذا الغرض.']],s:['Security means blocking unauthorized access (passwords, then encryption) and viruses.','الأمن يعني منع الوصول غير المصرّح به (كلمات المرور ثم التشفير) ومنع الفيروسات.']},
+{t:['Protocols','البروتوكولات'],d:['A protocol is a set of rules that govern data communication. A protocol defines what is communicated, how it is communicated, and when it is communicated.','البروتوكول هو مجموعة قواعد تحكم الاتصال البياني. ويحدد البروتوكول ماذا يُنقَل، وكيف يُنقَل، ومتى يُنقَل.'],p:[['Entity: anything capable of sending or receiving information. Examples include application programs, file transfer packages, browsers, database management systems, and electronic mail software.','الكيان (Entity): أي شيء قادر على إرسال المعلومات أو استقبالها. ومن أمثلته برامج التطبيقات، وحزم نقل الملفات، والمتصفحات، وأنظمة إدارة قواعد البيانات، وبرمجيات البريد الإلكتروني.'],['System: a physical object that contains one or more entities. Examples include computers and terminals.','النظام (System): جسم مادي يحتوي على كيان واحد أو أكثر. ومن أمثلته الحواسيب والمحطات الطرفية.'],['Two entities cannot just send bit streams to each other and expect to be understood. For communication to occur, the entities must agree on a protocol.','لا يمكن لكيانين أن يتبادلا تدفقات من البتات ويتوقعا أن يفهم أحدهما الآخر. ولكي يحدث الاتصال، يجب أن يتفق الكيانان على بروتوكول.']],s:['A protocol is the agreement between entities that defines what, how, and when.','البروتوكول هو الاتفاق بين الكيانات الذي يحدد ماذا وكيف ومتى.']},
+{t:['Standards','المعايير القياسية'],p:[['Standards are essential in creating and maintaining an open and competitive market for equipment manufacturers.','تُعدّ المعايير القياسية ضرورية لإنشاء سوق مفتوحة وتنافسية للشركات المصنِّعة للمعدات والحفاظ عليها.'],['Standards guarantee national and international interoperability of data and telecommunications technology and processes.','تضمن المعايير القياسية التشغيل البيني (interoperability) على المستويين الوطني والدولي لتقنيات البيانات والاتصالات وعملياتها.'],['Standards are developed through cooperation among standards creation committees, forums, and government regulatory agencies.','تُطوَّر المعايير القياسية بالتعاون بين لجان إنشاء المعايير والمنتديات والجهات التنظيمية الحكومية.'],['ISO: International Standards Organization.','ISO: المنظمة الدولية للمعايير.'],['ITU: International Telecommunications Union.','ITU: الاتحاد الدولي للاتصالات.'],['ANSI: American National Standards Institute.','ANSI: المعهد الوطني الأمريكي للمعايير.'],['IEEE: Institute of Electrical and Electronics Engineers.','IEEE: معهد مهندسي الكهرباء والإلكترونيات.']],x:['Four standards bodies are named in the lecture: ISO, ITU, ANSI, IEEE.','الجهات الأربع المذكورة في المحاضرة: ISO وITU وANSI وIEEE.'],s:['Standards let equipment from different manufacturers work together, and four bodies develop them.','تتيح المعايير القياسية للمعدات من مصنّعين مختلفين العمل معًا، وتضعها أربع جهات.']},
+{t:['Basic Concepts','المفاهيم الأساسية'],d:['Before examining how data are transmitted from one device to another, it is important to understand the relationship between the communicating devices. Five general concepts provide the basis for this relationship.','قبل دراسة كيفية نقل البيانات من جهاز إلى آخر، من المهم فهم العلاقة بين الأجهزة المتصلة. وتشكّل خمسة مفاهيم عامة أساس هذه العلاقة.'],p:[['Line configuration.','تهيئة الخط (Line configuration).'],['Topology.','الطوبولوجيا (Topology).'],['Transmission mode.','نمط النقل (Transmission mode).'],['Categories of networks.','أصناف الشبكات (Categories of networks).'],['Internetworks.','الشبكات البينية (Internetworks).']],s:['Five concepts describe how communicating devices relate to each other.','خمسة مفاهيم تصف العلاقة بين الأجهزة المتصلة.']},
+{t:['Line Configuration','تهيئة الخط'],d:['Line configuration refers to the way two or more communication devices attach to a link. A link is the physical communication pathway that transfers data from one device to another.','تشير تهيئة الخط إلى الطريقة التي يرتبط بها جهازا اتصال أو أكثر بالوصلة. والوصلة (link) هي المسار الفيزيائي للاتصال الذي ينقل البيانات من جهاز إلى آخر.'],p:[['Point-to-point: provides a dedicated link between two devices. The entire capacity of the channel is reserved for transmission between those two devices. Most point-to-point configurations use an actual length of wire or cable, but other options, such as microwave or satellite links, are also possible.','نقطة إلى نقطة (Point-to-Point): توفّر وصلة مخصصة بين جهازين. وتُحجَز سعة القناة بأكملها للنقل بين هذين الجهازين. وتستخدم معظم هذه التهيئات طولًا فعليًا من السلك أو الكبل، لكن توجد خيارات أخرى مثل وصلات الموجات الدقيقة أو الأقمار الصناعية.'],['Multipoint (also called multidrop): more than two specific devices share a single link. The capacity of the channel is shared, either spatially or temporally.','متعدد النقاط (Multipoint) ويسمى أيضًا (multidrop): يشترك أكثر من جهازين محددين في وصلة واحدة، وتكون سعة القناة مشتركة، إما مكانيًا أو زمنيًا.'],['Spatially shared: several devices can use the link simultaneously.','مشتركة مكانيًا: يمكن لعدة أجهزة استخدام الوصلة في الوقت نفسه.'],['Time-shared: users must take turns.','مشتركة زمنيًا: يجب على المستخدمين التناوب في الاستخدام.']],s:['Line configuration asks how many devices share a link: two (point-to-point) or more (multipoint).','تجيب تهيئة الخط عن سؤال: كم جهازًا يشترك في الوصلة؟ جهازان (نقطة إلى نقطة) أو أكثر (متعدد النقاط).']}
+]},
+{n:3,en:'Topology & Categories of Networks',ar:'الطوبولوجيا وأصناف الشبكات',T:[
+{t:['Topology','الطوبولوجيا'],
+d:['The term topology refers to the way a network is laid out, either physically or logically. The topology of a network is the geometric representation of the relationship of all the links and linking devices (nodes) to each other.','يشير مصطلح الطوبولوجيا (topology) إلى الطريقة التي تُنظَّم بها الشبكة، فيزيائيًا أو منطقيًا. وطوبولوجيا الشبكة هي التمثيل الهندسي للعلاقة بين جميع الوصلات وأجهزة الربط (العقد) بعضها ببعض.'],
+p:[['Link and topology: two or more devices connect to a link; two or more links form a topology.','الوصلة والطوبولوجيا: يرتبط جهازان أو أكثر بوصلة، وتشكّل وصلتان أو أكثر طوبولوجيا.'],
+['Five basic topologies: Mesh, Star, Tree, Bus, Ring. These five labels describe how the devices in a network are interconnected rather than their physical arrangement.','الطوبولوجيات الأساسية الخمس: Mesh وStar وTree وBus وRing. وتصف هذه التسميات كيفية ترابط الأجهزة في الشبكة، لا ترتيبها الفيزيائي.'],
+['Two relationships are possible: peer-to-peer and client-server.','هناك علاقتان ممكنتان: ند لند (peer-to-peer) وعميل-خادم (client-server).'],
+['Peer-to-peer: the devices share the link equally.','ند لند (peer-to-peer): تتشارك الأجهزة الوصلة بالتساوي.'],
+['Client-server: one device controls traffic and the others must transmit through it.','عميل-خادم (client-server): يتحكم جهاز واحد بحركة البيانات، وعلى بقية الأجهزة أن ترسل عبره.'],
+['Suitability: ring and mesh topologies are more convenient for peer-to-peer transmission, while star and tree are more convenient for client-server. A bus topology is equally convenient for either.','الملاءمة: طوبولوجيا الحلقة (ring) والشبكة الكاملة (mesh) أنسب لنقل ند لند، بينما النجمة (star) والشجرة (tree) أنسب لنمط عميل-خادم. أما الناقل (bus) فيلائم النمطين بالتساوي.']],
+s:['Topology is the map of how devices are linked: five basic types, each suited to peer-to-peer or client-server.','الطوبولوجيا هي خريطة ترابط الأجهزة: خمسة أنواع أساسية، وكل نوع يلائم نمط ند لند أو عميل-خادم.']},
+
+{t:['Mesh','طوبولوجيا Mesh'],
+d:['In a mesh topology, every device has a dedicated point-to-point link to every other device. The term dedicated means that the link carries traffic only between the two devices it connects.','في طوبولوجيا الشبكة الكاملة (mesh)، يملك كل جهاز وصلة مخصصة (dedicated) من نوع نقطة إلى نقطة مع كل جهاز آخر. ويعني مصطلح «مخصصة» أن الوصلة تحمل البيانات بين الجهازين اللذين تربطهما فقط.'],
+p:[['Number of channels: a fully connected mesh network has n(n-1)/2 physical channels to link its devices (Figure 1).','عدد القنوات: تحتوي شبكة mesh كاملة الاتصال على n(n-1)/2 قناة فيزيائية لربط أجهزتها (الشكل 1).'],
+['Advantage 1: the use of dedicated links guarantees that each connection can carry its data load, thus eliminating the traffic problems that can occur when links must be shared by multiple devices.','الميزة 1: تضمن الوصلات المخصصة أن كل اتصال يستطيع حمل حمولته من البيانات، فتُزال مشكلات الازدحام التي قد تحدث حين تتشارك أجهزة عدة الوصلة.'],
+['Advantage 2: a mesh topology is robust; if one link becomes unusable, it does not affect the entire system.','الميزة 2: طوبولوجيا mesh متينة (robust)؛ فإذا تعطلت وصلة واحدة لا يتأثر النظام كله.'],
+['Advantage 3: security. Every message sent travels along a dedicated line, so only the intended recipient sees it.','الميزة 3: الأمن. تنتقل كل رسالة مرسلة عبر خط مخصص، فلا يراها إلا المستلم المقصود.'],
+['Advantage 4: point-to-point links make fault identification and fault isolation easy.','الميزة 4: تسهّل الوصلات نقطة إلى نقطة تحديد العطل (fault identification) وعزله (fault isolation).'],
+['Disadvantage 1: difficult installation and reconfiguration because every device must be connected to every other device.','العيب 1: صعوبة التركيب وإعادة التهيئة لأن كل جهاز يجب أن يرتبط بكل جهاز آخر.'],
+['Disadvantage 2: the bulk of the wiring can be greater than the available space can accommodate.','العيب 2: قد يفوق حجم الأسلاك المساحة المتاحة.'],
+['Disadvantage 3: the hardware required to connect each link can be expensive.','العيب 3: قد يكون العتاد اللازم لربط كل وصلة مكلفًا.'],
+['Due to these reasons, a mesh topology is usually of limited use.','ولهذه الأسباب يكون استخدام طوبولوجيا mesh محدودًا عادةً.']],
+x:['Exam example: 5 devices need 5(5-1)/2 = 10 physical channels.','مثال امتحاني: 5 أجهزة تحتاج 5(5-1)/2 = 10 قنوات فيزيائية.'],
+s:['Mesh is the strongest in traffic, robustness and security, but costly and heavy in wiring, so rarely used.','الـ mesh الأقوى من حيث الحركة والمتانة والأمن، لكنها مكلفة وكثيرة الأسلاك، لذلك قليلة الاستخدام.']},
+
+{t:['Star','طوبولوجيا Star'],
+d:['In a star topology, each device has a dedicated point-to-point link only to a central controller, usually called a hub. The devices are not linked to each other.','في طوبولوجيا النجمة (star)، يملك كل جهاز وصلة مخصصة من نوع نقطة إلى نقطة مع وحدة تحكم مركزية (central controller) فقط، تُسمّى عادةً الموزّع (hub). والأجهزة غير مرتبطة بعضها ببعض.'],
+p:[['No direct traffic: unlike a mesh topology, a star topology does not allow direct traffic between devices. The controller acts as an exchange.','لا حركة مباشرة: خلافًا لطوبولوجيا mesh، لا تسمح النجمة بحركة بيانات مباشرة بين الأجهزة، وتعمل وحدة التحكم كمقسم (exchange).'],
+['How it works: if one device wants to send data to another, it sends to the controller, which then relays the data to the other connected devices (Figure 2).','آلية العمل: إذا أراد جهاز إرسال بيانات إلى جهاز آخر، فإنه يرسلها إلى وحدة التحكم التي تعيد إرسالها إلى الأجهزة المتصلة الأخرى (الشكل 2).'],
+['Advantage 1: less expensive than a mesh topology.','الميزة 1: أقل كلفة من طوبولوجيا mesh.'],
+['Advantage 2: easy to install.','الميزة 2: سهلة التركيب.'],
+['Advantage 3: robustness. If one link fails, only that link is affected.','الميزة 3: المتانة. إذا فشلت وصلة واحدة تتأثر هي فقط.'],
+['Advantage 4: easy fault identification and fault isolation. As long as the hub is working, it can be used to monitor link problems and bypass defective links.','الميزة 4: سهولة تحديد العطل وعزله. ما دام الموزّع يعمل، يمكن استخدامه لمراقبة مشكلات الوصلات وتجاوز الوصلات المعطوبة.'],
+['Disadvantage 1: any fault that occurs to the central controller will drop down the entire network.','العيب 1: أي عطل يصيب وحدة التحكم المركزية يُسقط الشبكة بأكملها.'],
+['Disadvantage 2: although the star needs less cabling than mesh, it still needs more cables than ring and tree topology.','العيب 2: رغم أن النجمة تحتاج كابلات أقل من mesh، فإنها تحتاج كابلات أكثر من طوبولوجيا الحلقة والشجرة.']],
+s:['Star is cheap, easy and robust per link, but fully dependent on the central hub.','النجمة رخيصة وسهلة ومتينة على مستوى الوصلة، لكنها تعتمد كليًا على الموزّع المركزي.']},
+
+{t:['Tree','طوبولوجيا Tree'],
+d:['A tree topology is a variation of a star. However, not every device plugs directly into the central hub. The majority of devices connect to a secondary hub that in turn is connected to the central hub.','طوبولوجيا الشجرة (tree) صورة معدّلة من النجمة، لكن ليس كل جهاز يتصل مباشرة بالموزّع المركزي. فمعظم الأجهزة تتصل بموزّع ثانوي (secondary hub) يرتبط بدوره بالموزّع المركزي (الشكل 3).'],
+p:[['Central hub: the central hub in the tree is an active hub. An active hub contains a repeater, which is a hardware device that regenerates the received bit patterns before sending them out.','الموزّع المركزي: الموزّع المركزي في الشجرة هو موزّع نشط (active hub). ويحتوي الموزّع النشط على مكرِّر (repeater)، وهو جهاز عتادي يعيد توليد أنماط البتات المستلمة قبل إرسالها.'],
+['Repeating strengthens transmissions and increases the distance a signal can travel between sender and receiver.','يقوّي التكرار عمليات الإرسال ويزيد المسافة التي تقطعها الإشارة بين المرسل والمستقبل.'],
+['Secondary hubs: the secondary hubs may be active or passive hubs.','الموزّعات الثانوية: قد تكون الموزّعات الثانوية نشطة أو سلبية (passive).'],
+['Passive hub: provides a simple physical connection between the attached devices. Internally, each passive hub contains a set of resistors to balance the circuit linking the connected devices.','الموزّع السلبي: يوفّر توصيلًا فيزيائيًا بسيطًا بين الأجهزة المرتبطة به. ويحتوي كل موزّع سلبي داخليًا على مجموعة مقاومات لموازنة الدائرة التي تربط الأجهزة المتصلة.'],
+['The advantages and disadvantages of a tree topology are generally the same as those of a star.','مزايا طوبولوجيا الشجرة وعيوبها هي عمومًا نفسها مزايا النجمة وعيوبها.'],
+['Further advantage 1: the addition of secondary hubs allows more devices to be attached to a single central hub and can therefore increase the distance a signal can travel between devices.','ميزة إضافية 1: تسمح إضافة الموزّعات الثانوية بربط عدد أكبر من الأجهزة بموزّع مركزي واحد، ولذلك يمكنها زيادة المسافة التي تقطعها الإشارة بين الأجهزة.'],
+['Further advantage 2: it allows the network to isolate and prioritize communications from different computers.','ميزة إضافية 2: تتيح للشبكة عزل الاتصالات الصادرة من حواسيب مختلفة وترتيبها حسب الأولوية.']],
+s:['Tree is a multi-level star with active and passive hubs, giving more devices, more distance, and isolation and prioritization.','الشجرة نجمة متعددة المستويات بموزّعات نشطة وسلبية، توفّر أجهزة أكثر ومسافة أطول وإمكانية العزل وترتيب الأولويات.']},
+
+{t:['Bus','طوبولوجيا Bus'],
+d:['The preceding examples all describe point-to-point configurations. A bus topology, on the other hand, is multipoint. One long cable acts as a backbone to link all the devices in the network.','الأمثلة السابقة كلها تصف تهيئات نقطة إلى نقطة. أما طوبولوجيا الناقل (bus) فهي متعددة النقاط (multipoint). يعمل كابل واحد طويل كعمود فقري (backbone) يربط جميع أجهزة الشبكة (الشكل 4).'],
+p:[['Nodes are connected to the bus cable by drop lines and taps.','تُوصَّل العقد بكابل الناقل بواسطة خطوط التفرّع (drop lines) ونقاط التوصيل (taps).'],
+['Drop line: a connection running between the device and the main cable.','خط التفرّع (drop line): وصلة تمتد بين الجهاز والكابل الرئيسي.'],
+['Tap: a connector that splices into the main cable.','نقطة التوصيل (tap): موصّل يُدمج في الكابل الرئيسي.'],
+['Signal weakening: as a signal travels along the backbone, some of its energy is transformed into heat. Therefore, it becomes weaker and weaker the farther it has to travel.','ضعف الإشارة: أثناء انتقال الإشارة على العمود الفقري يتحول جزء من طاقتها إلى حرارة، لذلك تضعف أكثر فأكثر كلما ابتعدت.'],
+['For this reason, there is a limit on the number of taps a bus can support and on the distance between those taps.','ولهذا السبب يوجد حدّ لعدد نقاط التوصيل التي يدعمها الناقل ولمسافة ما بينها.'],
+['Terminators: the figure shows a terminator at each end of the bus cable.','المُنهيات (terminators): يُظهر الشكل مُنهيًا عند كل طرف من كابل الناقل.'],
+['Advantage 1: ease of installation.','الميزة 1: سهولة التركيب.'],
+['Advantage 2: the backbone cable can be laid along the most efficient path, then connected to the nodes by drop lines of various lengths.','الميزة 2: يمكن مدّ كابل العمود الفقري على أكفأ مسار، ثم ربطه بالعقد بخطوط تفرّع مختلفة الأطوال.'],
+['Advantage 3: uses less cabling than mesh, star, and tree topologies.','الميزة 3: يستخدم كابلات أقل من طوبولوجيا mesh وstar وtree.'],
+['Disadvantage 1: difficult reconfiguration and fault isolation.','العيب 1: صعوبة إعادة التهيئة وعزل الأعطال.'],
+['Disadvantage 2: a fault or break in the bus cable stops all transmission, even between devices on the same side of the problem. The damaged area reflects signals back in the direction of origin, creating noise in both directions.','العيب 2: أي عطل أو قطع في كابل الناقل يوقف كل عمليات الإرسال، حتى بين الأجهزة الواقعة في الجهة نفسها من المشكلة. وتعكس المنطقة التالفة الإشارات في اتجاه مصدرها، فتولّد ضجيجًا (noise) في الاتجاهين.'],
+['Disadvantage 3: adding new devices may therefore require modification or replacement of the backbone.','العيب 3: لذلك قد تتطلب إضافة أجهزة جديدة تعديل العمود الفقري أو استبداله.']],
+s:['Bus is cheap and easy to install with little cabling, but one break in the backbone stops the whole network.','الـ bus رخيص وسهل التركيب وقليل الكابلات، لكن قطعًا واحدًا في العمود الفقري يوقف الشبكة كلها.']},
+
+{t:['Ring & Hybrid','طوبولوجيا Ring والهجينة'],
+d:['In a ring topology, each device has a dedicated point-to-point line configuration only with the two devices on either side of it.','في طوبولوجيا الحلقة (ring)، يملك كل جهاز تهيئة خط (line configuration) مخصصة من نوع نقطة إلى نقطة مع الجهازين اللذين على جانبيه فقط.'],
+p:[['Signal flow: a signal is passed along the ring in one direction, from device to device, until it reaches its destination.','تدفق الإشارة: تُمرَّر الإشارة عبر الحلقة في اتجاه واحد، من جهاز إلى جهاز، حتى تصل إلى وجهتها (الشكل 5).'],
+['Repeater: each device in the ring incorporates a repeater. When a device receives a signal intended for another device, its repeater regenerates the bits and passes them along.','المكرِّر: يتضمن كل جهاز في الحلقة مكرِّرًا. وحين يستلم الجهاز إشارة مخصصة لجهاز آخر، يعيد مكرِّره توليد البتات ويمرّرها.'],
+['Advantage 1: relatively easy to install and reconfigure.','الميزة 1: سهلة التركيب وإعادة التهيئة نسبيًا.'],
+['Advantage 2: addition or deletion of a device requires moving only two connections.','الميزة 2: تتطلب إضافة جهاز أو حذفه نقل وصلتين فقط.'],
+['Advantage 3: fault isolation is simplified.','الميزة 3: عزل الأعطال مبسّط.'],
+['Disadvantage: a break in the ring (such as a disabled station) can disable the entire network, and it is one way data flow.','العيب: قد يعطّل القطع في الحلقة (مثل محطة معطّلة) الشبكة بأكملها، كما أن تدفق البيانات فيها باتجاه واحد.'],
+['Hybrid topologies: often a network combines several topologies as sub-networks linked together in a larger topology.','الطوبولوجيات الهجينة (hybrid): غالبًا ما تجمع الشبكة عدة طوبولوجيات كشبكات فرعية (sub-networks) مرتبطة معًا ضمن طوبولوجيا أكبر.'],
+['Example: one department of a business may have decided to use a bus topology while another department has a ring. The two can be connected to each other via a central controller in a star topology (Figure 6).','مثال: قد يقرر أحد أقسام شركة استخدام طوبولوجيا bus بينما يستخدم قسم آخر ring. ويمكن ربط الاثنين معًا عبر وحدة تحكم مركزية بطوبولوجيا star (الشكل 6).']],
+s:['Ring passes the signal one way through repeaters and is easy to extend but fragile; hybrid combines several topologies in one network.','الحلقة تمرّر الإشارة باتجاه واحد عبر مكرّرات وسهلة التوسعة لكنها هشّة؛ أما الهجينة فتجمع عدة طوبولوجيات في شبكة واحدة.']},
+
+{t:['Categories by Size','الأصناف حسب الحجم'],
+d:['The category of a network can be determined according to five bases: its size, its physical architecture (center of control), transmission technology, its ownership, and service providing. According to size, we are generally referring to three primary categories: LAN, MAN and WAN.','يمكن تحديد صنف (category) الشبكة وفق خمسة أسس: حجمها، وبنيتها الفيزيائية (مركز التحكم)، وتقنية النقل، وملكيتها، وتقديم الخدمة. وبحسب الحجم نشير عمومًا إلى ثلاثة أصناف رئيسة: LAN وMAN وWAN.'],
+p:[['LAN: a local area network is usually privately owned and links the devices in a single office building or campus.','الشبكة المحلية (LAN): عادةً مملوكة ملكية خاصة، وتربط الأجهزة في مبنى مكاتب واحد أو حرم جامعي (campus) واحد.'],
+['LAN size: depending on the needs of an organization and the type of technology used, a LAN can be as simple as two PCs and a printer in someone’s home office, or it can extend throughout a company and include voice, sound, and video peripherals. Currently, LAN size is limited to a few kilometres.','حجم الـ LAN: بحسب احتياجات المؤسسة ونوع التقنية المستخدمة، قد تكون الـ LAN بسيطة بقدر حاسوبين وطابعة في مكتب منزلي، أو قد تمتد في الشركة كلها وتشمل أجهزة طرفية للصوت والفيديو. وحاليًا يقتصر حجم الـ LAN على بضعة كيلومترات.'],
+['LAN purpose: LANs are designed to allow resources to be shared between personal computers or workstations. The resources can include hardware (e.g., a printer), software (e.g., an application program), or data.','غرض الـ LAN: صُمّمت الشبكات المحلية للسماح بمشاركة الموارد بين الحواسيب الشخصية أو محطات العمل. وقد تشمل الموارد العتاد (كالطابعة) والبرمجيات (كبرنامج تطبيقي) والبيانات.'],
+['LAN example: a common example links a work group of task-related computers, for example engineering workstations or accounting PCs. One of the computers may be given a large-capacity disk drive and become a server to the other clients. Software can be stored on this central server and used as needed by the whole group.','مثال على الـ LAN: مثال شائع يربط مجموعة عمل من حواسيب مرتبطة بمهمة واحدة، كمحطات العمل الهندسية أو حواسيب المحاسبة. وقد يُزوَّد أحد الحواسيب بقرص كبير السعة فيصبح خادمًا (server) للعملاء (clients) الآخرين. ويمكن تخزين البرمجيات على هذا الخادم المركزي واستخدامها عند الحاجة من المجموعة كلها.'],
+['In this example the size of the LAN may be determined by licensing restrictions on the number of users per copy of software, or by restrictions on the number of users licensed to access the operating system.','في هذا المثال قد يتحدد حجم الـ LAN بقيود الترخيص على عدد المستخدمين لكل نسخة من البرنامج، أو بقيود على عدد المستخدمين المرخّص لهم بالوصول إلى نظام التشغيل.'],
+['LAN features: in addition to size, LANs are distinguished from other types of networks by their transmission media and topology. In general, a given LAN will use only one type of transmission medium. The most common LAN topologies are bus, ring, and star.','خصائص الـ LAN: إضافةً إلى الحجم، تتميّز الـ LANs عن الأنواع الأخرى من الشبكات بوسط النقل (transmission media) والطوبولوجيا. وعمومًا تستخدم الـ LAN الواحدة نوعًا واحدًا فقط من وسط النقل. وأكثر طوبولوجيات الـ LAN شيوعًا هي bus وring وstar.'],
+['LAN data rates: traditionally, LANs have data rates in the 4 to 16 Mbps range. Today, however, speeds are increasing and can reach 1 Gbps or even tens of Gigabits per second.','سرعات الـ LAN: تقليديًا تتراوح سرعات نقل البيانات في الـ LANs بين 4 و16 Mbps. أما اليوم فالسرعات في ازدياد ويمكن أن تبلغ 1 Gbps أو حتى عشرات الـ Gigabits في الثانية.'],
+['MAN: a metropolitan area network is designed to extend over an entire city.','الشبكة الحضرية (MAN): مصمّمة لتمتد على مدينة كاملة.'],
+['MAN forms: it may be a single network such as a cable television network, or it may be a means of connecting a number of LANs into a larger network so that resources may be shared LAN-to-LAN as well as device-to-device.','أشكال الـ MAN: قد تكون شبكة واحدة مثل شبكة التلفزيون الكابلي، أو وسيلة لربط عدد من الـ LANs في شبكة أكبر بحيث تُتشارك الموارد بين شبكة محلية وأخرى وبين جهاز وآخر.'],
+['MAN example: a company can use a MAN to connect the LANs in all of its offices throughout a city (Figure 7).','مثال على الـ MAN: يمكن لشركة استخدام MAN لربط الشبكات المحلية في جميع مكاتبها في أنحاء المدينة (الشكل 7).'],
+['MAN ownership: a MAN may be wholly owned and operated by a private company, or it may be a service provided by a public company, such as a local telephone company. Many telephone companies provide a popular MAN service called Switched Multimegabit Data Services (SMDS).','ملكية الـ MAN: قد تكون الـ MAN مملوكة ومُدارة بالكامل من شركة خاصة، أو قد تكون خدمة تقدمها شركة عامة مثل شركة الهاتف المحلية. وتقدّم شركات هاتف كثيرة خدمة MAN شائعة تسمى Switched Multimegabit Data Services (SMDS).'],
+['WAN: a wide area network provides long-distance transmission of data, voice, image, and video information over large geographical areas that may comprise a country, a continent, or even the whole world.','الشبكة واسعة النطاق (WAN): توفّر نقلًا بعيد المدى للبيانات والصوت والصورة والفيديو عبر مساحات جغرافية كبيرة قد تشمل بلدًا أو قارة أو العالم بأسره.'],
+['WAN vs LAN: in contrast to LANs (which depend on their own hardware for transmission), WANs may utilize public, leased, or private communication devices, usually in combinations, and can therefore span an unlimited number of miles.','الفرق بين WAN وLAN: على خلاف الـ LANs (التي تعتمد على عتادها الخاص في النقل)، قد تستخدم الـ WANs أجهزة اتصال عامة أو مؤجَّرة أو خاصة، وعادةً بمزيج منها، ولذلك يمكنها أن تمتد على عدد غير محدود من الأميال.'],
+['A WAN that is wholly owned and used by a single company is often referred to as an enterprise network.','تُسمّى الـ WAN المملوكة بالكامل لشركة واحدة والمستخدمة من قبلها غالبًا شبكة المؤسسة (enterprise network).']],
+s:['By size: LAN (building or campus), MAN (a city), WAN (country, continent or the world).','حسب الحجم: LAN (مبنى أو حرم جامعي)، وMAN (مدينة)، وWAN (بلد أو قارة أو العالم).']},
+
+{t:['Other Categories','الأصناف الأخرى'],
+d:['Besides size, a network can be categorized by its physical architecture (center of control), its ownership, its transmission technology, and the way it provides service.','إضافةً إلى الحجم، يمكن تصنيف الشبكة بحسب بنيتها الفيزيائية (مركز التحكم)، وملكيتها، وتقنية النقل، وطريقة تقديم الخدمة.'],
+p:[['Physical architecture: Centralized network. A central computer (mini computer or mainframe) manages all communication and requests in the network.','البنية الفيزيائية: الشبكة المركزية (centralized). حاسوب مركزي (mini computer أو mainframe) يدير جميع الاتصالات والطلبات في الشبكة.'],
+['Physical architecture: Distributed network. A group of personal computers (PCs) works together and shares the same input/output devices.','البنية الفيزيائية: الشبكة الموزعة (distributed). مجموعة حواسيب شخصية (PCs) تعمل معًا وتتشارك أجهزة الإدخال/الإخراج نفسها.'],
+['Physical architecture: Hybrid network. A combination of centralized and distributed networks.','البنية الفيزيائية: الشبكة الهجينة (hybrid). مزيج من الشبكات المركزية والموزعة.'],
+['Ownership: Public network. Owned, managed, and operated by a public company.','الملكية: الشبكة العامة (public). مملوكة ومُدارة ومُشغَّلة من شركة عامة.'],
+['Ownership: Private network. Owned and managed by a private organization.','الملكية: الشبكة الخاصة (private). مملوكة ومُدارة من منظمة خاصة.'],
+['Transmission technology: Broadcasting network. It does not restrict or determine a specified destination. It has a single communication channel that is shared by all the machines on the network.','تقنية النقل: شبكة البث (broadcasting). لا تقيّد وجهة محددة ولا تحددها. لها قناة اتصال واحدة تتشاركها جميع الأجهزة في الشبكة.'],
+['Short messages, called packets, sent by any machine are received by all the others. Broadcast systems generally also allow the possibility of addressing a packet to all destinations by using a special code in the address field.','الرسائل القصيرة، وتسمى الحزم (packets)، التي يرسلها أي جهاز تستلمها جميع الأجهزة الأخرى. وتتيح أنظمة البث عمومًا أيضًا إمكانية توجيه حزمة إلى جميع الوجهات باستخدام رمز خاص في حقل العنوان.'],
+['Transmission technology: Point to Point network. Data or packets are sent to a specified destination which is able to reflect each of the receiving.','تقنية النقل: شبكة نقطة إلى نقطة (point to point). تُرسل البيانات أو الحزم إلى وجهة محددة قادرة على عكس كل عملية استلام.'],
+['Service providing: Peer to Peer network. Any PC connected to this network can provide services to any other PC and request services from any.','تقديم الخدمة: شبكة ند لند (peer to peer). يمكن لأي حاسوب متصل بهذه الشبكة تقديم خدمات لأي حاسوب آخر وطلب خدمات من أي حاسوب.'],
+['Service providing: Client/Server network. The most popular network. The net depends on a PC acting as a service provider called the SERVER. The server applies the same policy to control which client will get the service and the type of service.','تقديم الخدمة: شبكة عميل/خادم (client/server). هي الشبكة الأكثر شيوعًا. تعتمد الشبكة على حاسوب يعمل مزوِّدًا للخدمة يسمى الخادم (SERVER). ويطبّق الخادم سياسة موحّدة للتحكم في العميل الذي سيحصل على الخدمة ونوع الخدمة.']],
+s:['Besides size, networks are classified by architecture (centralized, distributed, hybrid), ownership (public, private), transmission (broadcast, point to point) and service (peer to peer, client/server).','إضافةً إلى الحجم، تُصنَّف الشبكات بحسب البنية (مركزية، موزعة، هجينة)، والملكية (عامة، خاصة)، والنقل (بث، نقطة إلى نقطة)، والخدمة (ند لند، عميل/خادم).']}
+]},
+{n:4,en:'Network Models',ar:'نماذج الشبكات',T:[
+{t:['Network Models','نماذج الشبكات'],
+d:['In data communication and networking, a protocol defines the rules that both the sender and receiver and all intermediate devices need to follow to be able to communicate effectively.','في الاتصال البياني والشبكات، يحدّد البروتوكول القواعد التي يجب أن يتبعها المرسل والمستقبل وجميع الأجهزة الوسيطة ليتمكنوا من الاتصال بفعالية.'],
+p:[['When communication is simple, we may need only one simple protocol.','عندما يكون الاتصال بسيطًا قد يكفي بروتوكول واحد بسيط.'],
+['When communication is complex, we may need to divide the task between different layers, in which case we need a protocol at each layer, or protocol layering.','وعندما يكون الاتصال معقدًا قد نحتاج إلى تقسيم المهمة بين طبقات مختلفة، فنحتاج إلى بروتوكول في كل طبقة، وهذا هو تقسيم البروتوكولات إلى طبقات (protocol layering).'],
+['First principle: if we want bidirectional communication, each layer must be able to perform two opposite tasks, one in each direction.','المبدأ الأول: للحصول على اتصال ثنائي الاتجاه (bidirectional)، يجب أن تكون كل طبقة قادرة على أداء مهمتين متعاكستين، واحدة في كل اتجاه.'],
+['Example: layer 3 listens and talks; layer 2 encrypts and decrypts; layer 1 sends and receives mail.','مثال: الطبقة 3 تستمع وتتحدث، والطبقة 2 تشفّر وتفك التشفير، والطبقة 1 ترسل البريد وتستلمه.'],
+['Second principle: the two objects under each layer at both sites should be identical.','المبدأ الثاني: يجب أن يكون الكائنان (objects) الواقعان تحت كل طبقة في الموقعين متطابقين.'],
+['Example: under layer 3 a plaintext letter; under layer 2 a ciphertext letter; under layer 1 a piece of mail.','مثال: تحت الطبقة 3 رسالة نص عادي (plaintext)، وتحت الطبقة 2 رسالة نص مشفّر (ciphertext)، وتحت الطبقة 1 قطعة بريد (mail).']],
+s:['Complex communication is divided into layers governed by two principles: two opposite tasks per layer, and identical objects at both sites.','الاتصال المعقد يُقسَّم إلى طبقات يحكمها مبدآن: مهمتان متعاكستان في كل طبقة، وكائنان متطابقان في الموقعين.']},
+
+{t:['Logical Connections','الاتصالات المنطقية'],
+d:['After following the two principles, there is a logical (imaginary) connection at each layer through which the two sides can send the object created from that layer. This means layer-to-layer communication.','بعد اتباع المبدأين، يوجد اتصال منطقي (خيالي) في كل طبقة يمكن للطرفين عبره إرسال الكائن الذي تنتجه تلك الطبقة، أي اتصال من طبقة إلى طبقتها المناظرة (layer-to-layer).'],
+p:[['Figure 1 (logical connection between peer layers): Sara and Noor, each with three layers, and a logical connection between each pair of peer layers.','الشكل 1 (الاتصال المنطقي بين الطبقات المتناظرة): Sara وNoor، لكل منهما ثلاث طبقات، وبين كل طبقتين متناظرتين اتصال منطقي.'],
+['Layer 3 (Talk/Listen): the object is plaintext.','الطبقة 3 (Talk/Listen): الكائن هو plaintext.'],
+['Layer 2 (Encrypt/Decrypt): the object is ciphertext.','الطبقة 2 (Encrypt/Decrypt): الكائن هو ciphertext.'],
+['Layer 1 (Send mail/Receive mail): the object is mail.','الطبقة 1 (Send mail/Receive mail): الكائن هو mail.'],
+['Benefit: the concept of logical connection helps us better understand the task of layering.','الفائدة: يساعدنا مفهوم الاتصال المنطقي على فهم مهمة تقسيم الطبقات بصورة أفضل.']],
+s:['Each layer behaves as if it talks directly to its peer layer at the other side.','كل طبقة تتصرف كأنها تتحدث مباشرة مع نظيرتها في الطرف الآخر.']},
+
+{t:['TCP/IP & Layered Architecture','TCP/IP والبنية الطبقية'],
+d:['TCP/IP (Transmission Control Protocol/Internet Protocol) is a protocol suite (a set of protocols organized in different layers) used in the Internet today. It is hierarchical: each upper-level protocol is supported by the services provided by one or more lower-level protocols.','TCP/IP حزمة بروتوكولات (protocol suite)، أي مجموعة بروتوكولات منظمة في طبقات مختلفة، تُستخدم في الإنترنت اليوم. وهي هرمية (hierarchical): كل بروتوكول في مستوى أعلى تدعمه الخدمات التي يوفرها بروتوكول أو أكثر في مستوى أدنى.'],
+p:[['The original suite was defined as four software layers built upon the hardware (Application, Transport, Internet, Network Interface). Today it is thought of as a five-layer model.','عُرِّفت الحزمة الأصلية بأربع طبقات برمجية مبنية على العتاد (Application وTransport وInternet وNetwork Interface)، واليوم يُنظر إليها كنموذج من خمس طبقات.'],
+['Layer 5 Application: exchanges messages between two processes.','الطبقة 5 التطبيق (Application): تبادل الرسائل بين عمليتين (processes).'],
+['Layer 4 Transport: delivers the message from an application program to the corresponding program.','الطبقة 4 النقل (Transport): تسليم الرسالة من برنامج تطبيقي إلى البرنامج المقابل.'],
+['Layer 3 Network: host-to-host communication and routing the packet.','الطبقة 3 الشبكة (Network): الاتصال من مضيف إلى مضيف وتوجيه الحزمة (routing).'],
+['Layer 2 Data link: moves the packet across one link.','الطبقة 2 وصلة البيانات (Data link): نقل الحزمة عبر وصلة واحدة.'],
+['Layer 1 Physical: carries individual bits across the link.','الطبقة 1 الفيزيائية (Physical): نقل البتات الفردية عبر الوصلة.'],
+['Layered architecture: a small internet of three LANs (links), each with a link-layer switch, connected by one router. Computer A communicates with computer B.','البنية الطبقية (layered architecture): إنترنت صغير من ثلاث شبكات LAN (وصلات)، لكل منها مبدِّل طبقة الوصلة (link-layer switch)، ويربطها موجِّه (router) واحد. يتصل الحاسوب A بالحاسوب B.'],
+['Source host A: creates the message in the application layer and sends it down: Application, Transport, Network, Data link, Physical (hardware), to be physically sent.','المضيف المصدر A: ينشئ الرسالة في طبقة التطبيق ويرسلها نزولًا: Application ثم Transport ثم Network ثم Data link ثم Physical (العتاد)، لتُرسل فيزيائيًا.'],
+['Destination host B: receives it at the physical layer and delivers it up: Physical, Data link, Network, Transport, Application.','المضيف الوجهة B: يستقبلها في الطبقة الفيزيائية ويمرّرها صعودًا: Physical ثم Data link ثم Network ثم Transport ثم Application.'],
+['Each device is involved with layers depending on its role: the two hosts in all five layers, the router in three layers (no transport or application), the link-layer switch in two layers (data-link and physical).','يشارك كل جهاز في طبقات بحسب دوره: المضيفان في الطبقات الخمس كلها، والموجِّه في ثلاث طبقات (بلا نقل ولا تطبيق)، ومبدِّل طبقة الوصلة في طبقتين (وصلة البيانات والفيزيائية).']],
+s:['A sends down from Application to Physical; B receives up from Physical to Application.','يرسل A نزولًا من التطبيق إلى الفيزيائية، ويستقبل B صعودًا من الفيزيائية إلى التطبيق.']},
+
+{t:['Identical Objects','الكائنات المتطابقة'],
+d:['Figure 5 shows the identical object created by each layer in the TCP/IP protocol suite.','يبيّن الشكل 5 الكائن المتطابق (identical object) الذي تنتجه كل طبقة في حزمة TCP/IP.'],
+p:[['Application layer: messages.','طبقة التطبيق: رسائل (messages).'],
+['Transport layer: segments or user datagrams.','طبقة النقل: قطع (segments) أو مخططات مستخدم (user datagrams).'],
+['Network layer: datagrams.','طبقة الشبكة: داتاغرام (datagrams).'],
+['Data link layer: frames.','طبقة وصلة البيانات: إطارات (frames).'],
+['Physical layer: bits.','الطبقة الفيزيائية: بتات (bits).'],
+['Note: although the logical connection at the network layer is between the two hosts, identical objects exist only between two hops, because a router may fragment the packet at the network layer and send more packets than received.','ملاحظة: رغم أن الاتصال المنطقي في طبقة الشبكة بين المضيفين، فالكائنات المتطابقة تكون بين قفزتين (hops) فقط، لأن الموجِّه قد يجزّئ (fragment) الحزمة في طبقة الشبكة ويرسل حزمًا أكثر مما استقبل.'],
+['Switches are not shown in the figure because they do not change objects. The link between two hops does not change the object.','لا تظهر المبدِّلات في الشكل لأنها لا تغيّر الكائنات، والوصلة بين قفزتين لا تغيّر الكائن.']],
+x:['From top to bottom: messages, segments/user datagrams, datagrams, frames, bits.','من الأعلى إلى الأسفل: messages ثم segments/user datagrams ثم datagrams ثم frames ثم bits.'],
+s:['Each layer has its own data unit: bits, frames, datagrams, segments or user datagrams, messages.','لكل طبقة وحدة بيانات خاصة بها: bits وframes وdatagrams وsegments أو user datagrams وmessages.']},
+
+{t:['Physical Layer','الطبقة الفيزيائية'],
+d:['The physical layer is responsible for carrying individual bits in a frame across the link. Communication here is still logical because there is a hidden layer under it, the transmission media (cable or air), which carries electrical or optical signals, not bits.','الطبقة الفيزيائية (physical layer) مسؤولة عن حمل البتات الفردية الموجودة في إطار عبر الوصلة. والاتصال فيها يبقى منطقيًا لوجود طبقة خفية تحتها هي وسط النقل (كابل أو هواء) الذي ينقل إشارات كهربائية أو ضوئية لا بتات.'],
+p:[['Lowest layer in the TCP/IP protocol suite.','أدنى طبقة في حزمة TCP/IP.'],
+['Responsible for transmission and reception of individual bits.','مسؤولة عن إرسال البتات الفردية واستقبالها.'],
+['Defines cable types, connectors, lengths, frequencies, voltage levels, encoding, synchronisation mechanisms, data rates, etc.','تحدّد أنواع الكابلات، والموصّلات، والأطوال، والترددات، ومستويات الجهد، والترميز (encoding)، وآليات التزامن، وسرعات البيانات، وغيرها.']],
+s:['The physical layer sends and receives individual bits over the transmission medium.','الطبقة الفيزيائية ترسل البتات الفردية وتستقبلها عبر وسط النقل.']},
+
+{t:['Data-link Layer','طبقة وصلة البيانات'],
+d:['An internet is made up of several links connected by routers. Once the router determines the next link, the data-link layer takes the datagram and moves it across that link (a wired or wireless LAN or WAN) by encapsulating it in a frame.','يتكوّن الإنترنت من عدة وصلات تربطها موجِّهات. وبعد أن يحدد الموجِّه الوصلة التالية، تأخذ طبقة وصلة البيانات (data-link layer) الداتاغرام وتنقله عبر تلك الوصلة (LAN أو WAN سلكية أو لاسلكية) بتغليفه (encapsulation) في إطار (frame).'],
+p:[['Responsible for moving data across an individual link, i.e., delivering data within the same single network.','مسؤولة عن نقل البيانات عبر وصلة فردية، أي تسليم البيانات داخل الشبكة الواحدة نفسها.'],
+['Encapsulates packets in a frame.','تغلّف الحزم في إطار.'],
+['May provide error detection and correction.','قد توفر كشف الأخطاء وتصحيحها.'],
+['LANs often divide the functions of the data link layer into the Medium Access Control (MAC) sub-layer and the Logical Link Control (LLC) sub-layer.','تقسّم الـ LANs وظائف طبقة وصلة البيانات غالبًا إلى طبقة فرعية للتحكم بالوصول إلى الوسط (MAC) وطبقة فرعية للتحكم بالوصلة المنطقية (LLC).']],
+s:['The data-link layer wraps the datagram in a frame and moves it across one link.','طبقة وصلة البيانات تغلّف الداتاغرام في إطار وتنقله عبر وصلة واحدة.']},
+
+{t:['Network Layer','طبقة الشبكة'],
+d:['The network layer is responsible for creating a connection between the source computer and the destination computer. Communication is host-to-host, and the routers in the path choose the best route for each packet.','طبقة الشبكة (network layer) مسؤولة عن إنشاء اتصال بين الحاسوب المصدر والحاسوب الوجهة. والاتصال فيها من مضيف إلى مضيف (host-to-host)، وتختار الموجِّهات في المسار أفضل طريق لكل حزمة.'],
+p:[['Creates a path from the source computer to the destination.','تنشئ مسارًا من الحاسوب المصدر إلى الوجهة.'],
+['Communication is host-to-host (over several networks), with the routers in the path choosing the best route to the destination.','الاتصال من مضيف إلى مضيف (عبر عدة شبكات)، والموجِّهات في المسار تختار أفضل طريق إلى الوجهة.'],
+['Most common network layer protocol is the Internet Protocol (IP): connectionless; no flow control; no error control; no congestion control.','أشهر بروتوكول في طبقة الشبكة هو بروتوكول الإنترنت (IP): عديم الاتصال (connectionless)، وبلا تحكم بالتدفق (flow control)، وبلا تحكم بالأخطاء (error control)، وبلا تحكم بالازدحام (congestion control).'],
+['Auxiliary (helper) protocols include ICMP, IGMP, DHCP, and ARP.','تتضمن البروتوكولات المساعدة (auxiliary) كلًّا من ICMP وIGMP وDHCP وARP.']],
+s:['The network layer routes datagrams host-to-host using IP, helped by ICMP, IGMP, DHCP and ARP.','طبقة الشبكة توجّه الداتاغرام من مضيف إلى مضيف باستخدام IP، بمساعدة ICMP وIGMP وDHCP وARP.']},
+
+{t:['Transport Layer','طبقة النقل'],
+d:['The logical connection at the transport layer is end-to-end. It gets the message from the application layer, encapsulates it in a segment or user datagram, and sends it to the transport layer at the destination host, giving services to the application layer.','الاتصال المنطقي في طبقة النقل (transport layer) من طرف إلى طرف (end-to-end). تأخذ الرسالة من طبقة التطبيق وتغلّفها في segment أو user datagram وترسلها إلى طبقة النقل عند المضيف الوجهة، فتقدّم بذلك خدمات لطبقة التطبيق.'],
+p:[['End-to-end logical connection, e.g., browser to web server. It receives messages or user datagrams from the application layer and is responsible for delivering them to the destination host.','اتصال منطقي من طرف إلى طرف، مثل المتصفح إلى خادم الويب. تستقبل الرسائل أو user datagrams من طبقة التطبيق وتتولى تسليمها إلى المضيف الوجهة.'],
+['The Internet has two primary protocols: TCP and UDP.','للإنترنت بروتوكولان أساسيان: TCP وUDP.'],
+['TCP (Transmission Control Protocol): a connection-oriented logical pipe for delivering a stream of bytes. It provides flow control, error control, and congestion control.','TCP (Transmission Control Protocol): أنبوب منطقي موجَّه بالاتصال (connection-oriented) لتسليم تيار من البايتات (stream of bytes). ويوفر التحكم بالتدفق والتحكم بالأخطاء والتحكم بالازدحام.'],
+['UDP (User Datagram Protocol): connectionless (no logical connection). A simple protocol with no flow, error, or congestion control.','UDP (User Datagram Protocol): عديم الاتصال (بلا اتصال منطقي). بروتوكول بسيط بلا تحكم بالتدفق أو الأخطاء أو الازدحام.'],
+['There are many other transport protocols, but TCP and UDP are required by all Internet hosts and therefore global.','توجد بروتوكولات نقل أخرى كثيرة، لكن TCP وUDP مطلوبان في جميع مضيفات الإنترنت ولذلك فهما عالميان.'],
+['Example: Stream Control Transmission Protocol (SCTP), which combines features of TCP and UDP and is oriented to multimedia applications.','مثال: بروتوكول SCTP (Stream Control Transmission Protocol) الذي يجمع ميزات TCP وUDP وهو موجَّه لتطبيقات الوسائط المتعددة.']],
+s:['The transport layer delivers messages between applications: TCP is connection-oriented, UDP is connectionless.','طبقة النقل تسلّم الرسائل بين التطبيقات: TCP موجَّه بالاتصال، وUDP عديم الاتصال.']},
+
+{t:['Application Layer','طبقة التطبيق'],
+d:['The logical connection between the two application layers is end-to-end. Communication is between two processes: a process sends a request to the other process and receives a response.','الاتصال المنطقي بين طبقتي التطبيق (application layer) من طرف إلى طرف. والاتصال بين عمليتين (processes): ترسل إحداهما طلبًا إلى الأخرى وتستلم استجابة.'],
+p:[['Represents the protocols used by applications for exchanging data, not the applications themselves.','تمثّل البروتوكولات التي تستخدمها التطبيقات لتبادل البيانات، وليس التطبيقات نفسها.'],
+['Communication is between two processes (applications).','الاتصال بين عمليتين (تطبيقين).'],
+['Example application protocols: HTTP, SMTP, FTP, TELNET, SSH, SNMP, DNS, IGMP.','أمثلة على بروتوكولات التطبيق: HTTP وSMTP وFTP وTELNET وSSH وSNMP وDNS وIGMP.']],
+x:['Not in the exam scope; included for completeness.','خارج نطاق الامتحان؛ أُدرجت لاكتمال المادة.'],
+s:['The application layer is where processes exchange requests and responses using application protocols.','طبقة التطبيق هي التي تتبادل فيها العمليات الطلبات والاستجابات باستخدام بروتوكولات التطبيق.']}
+]}];
+const $=s=>document.querySelector(s);
+let R={},cur=null;
+try{const o=JSON.parse(localStorage.getItem("netrev")||"{}");if(o&&typeof o==="object"&&!Array.isArray(o))for(const k in o)if(o[k]===true&&/^\d+-\d+$/.test(k))R[k]=true}catch(e){}
+const save=()=>{try{localStorage.setItem("netrev",JSON.stringify(R))}catch(e){}};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const bi=s=>s.split(/([A-Za-z0-9][A-Za-z0-9 ×=+.,/’-]*[A-Za-z0-9]|[A-Za-z0-9])/).map((p,i)=>i%2?`<bdi dir="ltr">${esc(p)}</bdi>`:esc(p)).join("");
+const nz=s=>s.toLowerCase().replace(/[\u064b-\u065f\u0640]/g,"").replace(/[أإآ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/\s+/g," ").trim();
+const sm=()=>({behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth"});
+const P=[[60,170],[140,95],[260,95],[340,170]];
+function build(){
+let s='<ellipse cx="200" cy="322" rx="120" ry="8" fill="var(--bd)"/><path class="g" pathLength="1" d="M200 322V235" stroke="var(--trunk)" stroke-width="16" stroke-linecap="round" fill="none"/>';
+let tp='',fo='<ellipse class="cn" cx="90" cy="125" rx="88" ry="68"/><ellipse class="cn" cx="200" cy="88" rx="110" ry="62"/><ellipse class="cn" cx="310" cy="125" rx="88" ry="68"/>';
+const LF=(x,y,r,k,c)=>`<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${r}) scale(${c})"><path class="lf${k%2?" b":""}" style="--d:${(k%5)*.4}s" d="M0 0C5-9 17-9 22 0C17 9 5 9 0 0Z"/></g>`;
+D.forEach((b,i)=>{const[x,y]=P[i];
+[.3,.48,.66,.84].forEach((t,j)=>{const u=1-t,bx=u*u*u*200+3*u*u*t*200+3*u*t*t*x+t*t*t*x,by=u*u*u*245+3*u*u*t*(y+90)+3*u*t*t*(y+70)+t*t*t*y;fo+=LF(bx,by,(i*53+j*97)%360,i+j,1.1-j*.08)+LF(bx,by,(i*29+j*71+180)%360,i+j+1,.9)});
+s+=`<path class="g" pathLength="1" style="animation-delay:${.4+i*.15}s" d="M200 245C200 ${y+90} ${x} ${y+70} ${x} ${y}" stroke="var(--trunk)" stroke-width="7" stroke-linecap="round" fill="none"/>`;
+tp+=`<g class="tip" id="tp${b.n}" data-n="${b.n}" tabindex="0" role="button" aria-label="${b.ar}"><circle class="h" cx="${x}" cy="${y}" r="32"/><path class="st" d="M${x} ${y-24}q1-9 6-12"/><circle class="fr" cx="${x}" cy="${y}" r="26"/><ellipse class="shn" cx="${x-9}" cy="${y-11}" rx="6" ry="3.5" transform="rotate(-35 ${x-9} ${y-11})"/><text x="${x}" y="${y+7}" text-anchor="middle" class="nm">${b.n}</text><text x="${x}" y="${x===200?y-34:y+46}" text-anchor="middle" class="pg"></text></g>`});
+s+='<g class="fol" aria-hidden="true">'+fo+'</g>'+tp;$("#tree").innerHTML=s;
+document.querySelectorAll(".tip").forEach(g=>{const f=()=>pick(+g.dataset.n);g.onclick=f;g.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();f()}}});
+upd()}
+function upd(){D.forEach(b=>{const g=$("#tp"+b.n),d=b.T.filter((_,j)=>R[b.n+"-"+j]).length;
+g.classList.toggle("on",cur===b.n);g.setAttribute("aria-expanded",cur===b.n);g.setAttribute("aria-label","المحاضرة "+b.n+": "+b.en+(b.T.length?"، "+d+" من "+b.T.length+" تمت مراجعتها":"، قريباً"));
+g.querySelector(".pg").textContent=b.T.length?d+"/"+b.T.length:"قريباً"})}
+let curT=null;
+function closeAll(){cur=null;curT=null;upd();$("#leaves").innerHTML="";$("#panel").innerHTML=""}
+function pick(n,keep){if(cur===n&&!keep)return closeAll();cur=n;curT=null;const b=D[n-1];upd();const L=$("#leaves");
+L.innerHTML=`<h2>المحاضرة ${n}: ${b.ar}<small dir="ltr">${b.en}</small></h2>`+(b.T.length?`<div class="lv">`+b.T.map((t,i)=>`<button class="leaf${R[n+"-"+i]?" ok":""}" style="--i:${i}" data-i="${i}"><span>${esc(t.t[0])}</span><small>${esc(t.t[1])}</small></button>`).join("")+`</div>`:`<p class="soon">ستُضاف هذه المحاضرة بنفس التصميم والأسلوب.</p>`);
+L.querySelectorAll(".leaf").forEach(x=>x.onclick=()=>show(n,+x.dataset.i,"h"));
+$("#panel").innerHTML="";if(!keep)L.scrollIntoView(sm())}
+const row=a=>`<div class="row"><p class="en" lang="en" dir="ltr">${esc(a[0])}</p><p class="ar">${bi(a[1])}</p></div>`;
+function show(n,i,f){const t=D[n-1].T[i],k=n+"-"+i,N=D[n-1].T.length;curT=i;document.querySelectorAll(".leaf").forEach((l,j)=>l.classList.toggle("cur",j===i));
+$("#panel").innerHTML=`<div class="ph"><button id="cl" aria-label="إغلاق التفاصيل">✕</button><span>${i+1} / ${N}</span></div><h3 id="h" tabindex="-1"><span lang="en" dir="ltr">${esc(t.t[0])}</span> — ${esc(t.t[1])}</h3>`+(t.d?`<h4>Definition · التعريف</h4><div class="box">${row(t.d)}</div>`:"")+`<h4>Key points · النقاط الرئيسية</h4><div class="box">${t.p.map(row).join("")}</div>`+(t.x?`<div class="box tipbox">💡 ${row(t.x)}</div>`:"")+`<h4>Summary · الخلاصة</h4><div class="box">${row(t.s)}</div><div class="act"><button id="pv" aria-label="السابق"${i?"":" disabled"}>→</button><button id="rv"></button><button id="nx" aria-label="التالي"${i<N-1?"":" disabled"}>←</button></div>`;
+const rv=$("#rv"),set=()=>{rv.classList.toggle("on",!!R[k]);rv.textContent=R[k]?"✓ تمت المراجعة":"علّم كمُراجَع"};
+set();rv.onclick=()=>{R[k]=!R[k];if(!R[k])delete R[k];save();set();upd();const l=document.querySelectorAll(".leaf")[i];if(l)l.classList.toggle("ok",!!R[k])};
+$("#pv").onclick=()=>show(n,i-1,"pv");$("#nx").onclick=()=>show(n,i+1,"nx");$("#cl").onclick=()=>{$("#panel").innerHTML="";curT=null;const ls=document.querySelectorAll(".leaf");ls.forEach(l=>l.classList.remove("cur"));if(ls[i])ls[i].focus()};$("#panel").scrollIntoView(sm());const el=f?$("#"+f):null;(el&&!el.disabled?el:$("#h")).focus({preventScroll:true})}
+document.querySelectorAll(".bar button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".bar button").forEach(x=>{x.classList.toggle("on",x===b);x.setAttribute("aria-pressed",x===b)});$("#panel").className=b.dataset.m==="both"?"":b.dataset.m;try{localStorage.setItem("netmode",b.dataset.m)}catch(e){}});
+build();
+try{const m=localStorage.getItem("netmode"),b=m&&document.querySelector('.bar button[data-m="'+m+'"]');if(b)b.click()}catch(e){}
+const root=document.documentElement,th=$("#th"),dk=()=>root.dataset.theme?root.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;
+const tsync=()=>{const mt=document.querySelector('meta[name="theme-color"]');if(mt)mt.content=getComputedStyle(root).getPropertyValue("--bg").trim()||mt.content;th.textContent=dk()?"☀️ نهاري":"🌙 داكن"};
+try{const v=localStorage.getItem("nettheme");if(v)root.dataset.theme=v}catch(e){}
+th.onclick=()=>{const v=dk()?"light":"dark";root.dataset.theme=v;try{localStorage.setItem("nettheme",v)}catch(e){}tsync()};tsync();
+let rt=0;$("#rs").onclick=function(){if(!rt){this.textContent="اضغط مرة ثانية للتأكيد";rt=setTimeout(()=>{rt=0;this.textContent="إعادة ضبط التقدم"},3000);return}clearTimeout(rt);rt=0;this.textContent="إعادة ضبط التقدم";R={};save();upd();document.querySelectorAll(".leaf").forEach(l=>l.classList.remove("ok"));const b=$("#rv");if(b){b.classList.remove("on");b.textContent="علّم كمُراجَع"}};
+$("#q").oninput=function(){const v=nz(this.value),o=$("#res");if(!v){o.innerHTML="";return}const h=[];D.forEach(b=>b.T.forEach((t,i)=>{const s=nz([...t.t,...(t.d||[]),...t.p.flat(),...(t.x||[]),...t.s].join(" "));if(s.includes(v))h.push([b.n,i,t.t])}));o.innerHTML=h.length?h.map((r,j)=>`<button data-j="${j}"><span dir="ltr">${esc(r[2][0])}</span> <small>· ${esc(r[2][1])} — المحاضرة ${r[0]}</small></button>`).join(""):"<small>لا توجد نتائج</small>";o.querySelectorAll("button").forEach((x,j)=>x.onclick=()=>{pick(h[j][0],true);show(h[j][0],h[j][1]);o.innerHTML="";$("#q").value=""})};
+document.onkeydown=e=>{if(e.altKey||e.ctrlKey||e.metaKey)return;const r=$("#res");if(e.target.id==="q"){if(e.key==="Escape"){r.innerHTML="";e.target.value=""}return}if(e.key==="/"){e.preventDefault();$("#q").focus();return}if(e.key==="Escape"&&r.innerHTML){r.innerHTML="";return}if(curT===null)return;const b=$(e.key==="ArrowRight"?"#pv":e.key==="ArrowLeft"?"#nx":e.key==="Escape"?"#cl":"#none");if(b&&!b.disabled)b.click()};
+</script>
+<script>
+(()=>{
+const M=["كل ورقة تراجعها تقرّبك خطوة من النجاح 🌿","الدرس الصعب اليوم يصير سهلاً بكرة، كمّل.","ركّز على الفهم، والحفظ يجي وراه.","خذ استراحة 5 دقائق وارجع أقوى ☕","أنت أقرب للنجاح مما تتصوّر.","اشرب ماء 💧 وكمّل، شغلك حلو.","التكرار أمّ التعلّم، راجع مرة ثانية.","لا تقارن نفسك بغيرك، قارن نفسك بأمس.","ثمرة بعد ثمرة، والشجرة كلها تصير إلك 🍎","الثقة تجي من التحضير، وأنت دا تتحضّر.","شفتك تذاكر، ولله فخور بيك!","ابتسم 😊 أنت تسوّي شي رائع.","نظّم وقتك وخلّي النوم كافي، الدماغ يحتاجه.","غلطة اليوم هي معلومة ما تنسى بعدها.","خطوة صغيرة كل يوم تسوي فرق كبير ✨","أنت تقدر، وأنا مصدّق بيك 💪","ذاكر بذكاء: 25 دقيقة تركيز ثم 5 دقائق راحة ⏱️","اشرح اللي فهمته بصوت عالي، تثبت المعلومة أكثر 🗣️","اللي يتعب اليوم يرتاح يوم الامتحان 😎","ابدأ بأصعب ورقة وأنت نشيط، والباقي يسهل.","ولا يهمك لو نسيت شي، راجعه مرة ثانية وبيثبت.","كل ثمرة تخلّصها هي إنجاز يستاهل الفرحة 🍎","رتّب نومك قبل الامتحان، الدماغ المرتاح يتذكر أحسن 😴","اربط كل معلومة بمثال، وبيصير تذكرها أسهل.","لا تخاف من الأخطاء، هي أحسن معلّم.","أنت مو لوحدك، كلنا نذاكر وياك 🤝","شوية شوية توصل، المهم ما توقف.","كوب شاي وورقة وتركيز، وصفة النجاح ☕","اكتب ملخص بخط إيدك، فيه سحر للحفظ ✍️","ثقتك بنفسك نص النجاح، والنص الثاني مذاكرتك 💚","إذا تعبت، افتح الشباك وتنفّس عميقاً 🌬️","التقدم الصغير هو تقدم، افرح بيه 🎈","لا تأجّل ورقة اليوم لبكرة، بكرة إلها ورقتها 😉","الله يوفقك ويفتح عليك، أنت تقدر 🤲"];
+const C=["أحسنت! خلّصت محاضرة كاملة 🎉","ثمرة مكتملة! كمّل على نفس الروح 🍎"],ALL="خلّصت كل المحاضرات! أنت بطل حقيقي 🏆";
+const G=["🎁","⭐","🍎","🍃","✨","🌟"];
+const $=id=>document.getElementById(id),L=$("leo"),B=$("lbub"),Y=$("ly"),T=$("leoT");
+const rm=matchMedia("(prefers-reduced-motion:reduce)").matches;
+let on=true,x=0,d=1,pause=0,bag=[],tm=0,last=0,li=-1,passed=false,ai=0,iv=0,at=0;
+try{on=localStorage.getItem("netleo")!=="off"}catch(e){}
+const W=()=>Y.clientWidth,LW=()=>L.offsetWidth;
+function place(){L.style.transform="translateX("+x+"px) scaleX("+d+")";}
+function say(t){B.textContent=t;B.classList.add("on");const w=W(),bw=Math.min(210,w-16);B.style.maxWidth=bw+"px";const cx=x+LW()/2;B.style.left=Math.max(8,Math.min(w-bw-8,cx-bw/2))+"px";clearTimeout(tm);tm=setTimeout(()=>{B.classList.remove("on");pause=0;},4200);}
+function gift(t){endAct();const g=document.createElement("span");g.className="gift";g.textContent=G[Math.floor(Math.random()*G.length)];g.style.left=(x+LW()/2-11)+"px";g.style.bottom="22%";Y.appendChild(g);setTimeout(()=>g.remove(),1500);say(t);L.classList.add("wave");setTimeout(()=>L.classList.remove("wave"),1400);pause=1;}
+function next(){if(!bag.length){bag=M.map((_,i)=>i).sort(()=>Math.random()-.5);if(bag.length>1&&bag[bag.length-1]===li){const k=Math.floor(Math.random()*(bag.length-1));[bag[k],bag[bag.length-1]]=[bag[bag.length-1],bag[k]];}}li=bag.pop();return M[li];}
+const A=[{c:"أنمّي الشجرة بسحري ✨",e:["🍃","✨"],f:0},{c:"أسقي الشجرة 💧",e:["💧"],f:1},{c:"أراجع المحاضرة 📖",e:["📖"],f:0,o:1},{c:"أي ثمرة أقطف؟ 🍎",e:["🍎"],f:0,o:1}];
+function endAct(){clearInterval(iv);clearTimeout(at);L.classList.remove("act");}
+function puff(e,l,b,f){const g=document.createElement("span");g.className="gift"+(f?" fall":"");g.textContent=e;g.style.left=l+"px";g.style.bottom=b+"%";Y.appendChild(g);setTimeout(()=>g.remove(),1500);}
+function act(){endAct();const a=A[ai++%A.length];pause=1;L.classList.remove("walk");L.classList.add("act");say(a.c);clearTimeout(tm);let n=0;const mid=W()/2;
+const sp=()=>{const j=(Math.random()-.5)*28;if(a.o)puff(a.e[0],x+LW()/2-9,38+Math.random()*6,0);else puff(a.e[n++%a.e.length],mid-9+j,24+Math.random()*10,a.f)};
+sp();iv=setInterval(sp,a.o?1100:420);at=setTimeout(()=>{endAct();B.classList.remove("on");pause=0},3600);}
+function loop(t){if(on&&!rm&&!document.hidden){const dt=Math.min(.05,(t-last)/1000||0);last=t;if(!pause){x+=d*22*dt;const m=W()-LW();if(x>=m){x=m;d=-1;passed=false}if(x<=0){x=0;d=1;passed=false}const tg=m/2-d*LW()*.75;if(!passed&&((d>0&&x>=tg)||(d<0&&x<=tg))){passed=true;x=tg;act()}L.classList.add("walk")}else L.classList.remove("walk");place();}else last=t;requestAnimationFrame(loop);}
+function apply(){Y.style.display=on?"":"none";T.textContent=on?"🙈 إخفاء ليو":"👋 إظهار ليو";T.setAttribute("aria-pressed",!on);}
+L.addEventListener("pointerdown",()=>{pause=1;setTimeout(()=>{if(!B.classList.contains("on"))pause=0},1500)});
+L.addEventListener("click",()=>gift(next()));
+T.addEventListener("click",()=>{on=!on;try{localStorage.setItem("netleo",on?"on":"off")}catch(e){}apply();});
+function done(){let r={};try{r=JSON.parse(localStorage.getItem("netrev")||"{}")}catch(e){}return D.map(l=>l.T.filter((_,i)=>r[l.n+"-"+i]).length);}
+let prev=done();
+document.addEventListener("click",e=>{if(e.target.closest&&e.target.closest("#rv")){setTimeout(()=>{const c=done();let ev=null;if(D.every((l,i)=>l.T.length&&c[i]===l.T.length)&&!D.every((l,i)=>l.T.length&&prev[i]===l.T.length))ev=ALL;else D.forEach((l,i)=>{if(l.T.length&&c[i]===l.T.length&&prev[i]<l.T.length)ev=C[Math.floor(Math.random()*C.length)]});prev=c;if(ev&&on)gift(ev)},120)}});
+x=W()*(.1+Math.random()*.5);passed=x>=(W()-LW())/2-LW()*.75;apply();place();
+if(rm){x=Math.max(0,W()-LW()-10);place();}
+requestAnimationFrame(loop);
+addEventListener("resize",()=>{x=Math.min(x,Math.max(0,W()-LW()));place();});
+})();
+</script>
+</body>
+</html>
